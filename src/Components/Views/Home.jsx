@@ -6,8 +6,10 @@ import SidebarRight from "../Pages/SidebarRight";
 import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
 import SidebarLeftNotification from "../Pages/SidebarLeftNotification";
 import SidebarLeftSearch from "../Pages/SidebarLeftSearch";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
@@ -39,7 +41,14 @@ export default function Home() {
         <SidebarLeft
           minimized={isSidebarMinimized}
           setMinimized={setIsSidebarMinimized}
-          onMessagesClick={() => handlePanelOpen("messages")}
+          onMessagesClick={() => {
+    handlePanelOpen("message");
+    navigate("/message"); 
+  }}
+  onProfileClick={() => {
+    handlePanelOpen("profile");
+    navigate("/profile"); 
+  }}
           onNotificationsClick={() => handlePanelOpen("notifications")}
           onSearchClick={() => handlePanelOpen("search")}
           onDefaultClick={handleResetSidebar}
@@ -47,7 +56,7 @@ export default function Home() {
         {activePanel && (
           <div className="absolute inset-0 z-10 pointer-events-none">
             <div className="pointer-events-auto">
-              {activePanel === "messages" && <SidebarLeftMessage />}
+              {/* {activePanel === "messages" && <SidebarLeftMessage />} */}
                {activePanel === 'notifications' && <SidebarLeftNotification />} 
               {activePanel === 'search' && <SidebarLeftSearch />} 
             </div>

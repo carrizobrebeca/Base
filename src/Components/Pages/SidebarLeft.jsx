@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SidebarLeft = ({
   minimized,
@@ -6,8 +7,10 @@ const SidebarLeft = ({
   onMessagesClick,
   onNotificationsClick,
   onSearchClick,
+  onProfileClick,
   onDefaultClick,
 }) => {
+    const navigate = useNavigate();
   const handleToggle = (e) => {
     e.preventDefault();
     setMinimized((prev) => !prev);
@@ -129,7 +132,7 @@ const SidebarLeft = ({
               onClick={(e) => {
                 e.preventDefault();
                 handleToggle(e);
-                onMessagesClick();
+                navigate("/message");
               }}
               className="flex py-[0.55rem] px-0 rounded-xl hover:bg-header"
             >
@@ -191,6 +194,7 @@ const SidebarLeft = ({
               onClick={(e) => {
                 e.preventDefault();
                 onDefaultClick();
+                navigate("/profile");
               }}
               className="flex py-[0.55rem] px-0 rounded-xl hover:bg-header"
             >
