@@ -9,7 +9,7 @@ const NavSm = () => {
           <div className="flex justify-between">
 
             <div class="relative text-gray-600 flex items-center ">
-              <h2 className="text-xl">
+              <h2 className="text-4xl">
                 Evently
               </h2>
               <div class="absolute -top-1 -right-1 size-14 text-white">

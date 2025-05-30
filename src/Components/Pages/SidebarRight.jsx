@@ -19,75 +19,148 @@ const SidebarRight = ({
       >
         <div className="w-full flex items-center pb-8">
           <div className="w-full flex items-center pt-4">
-                    <img
-                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                        className="w-10 h-10 object-cover rounded-full"
-                    />
-                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
-                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
-                    </div>
-                </div>
-        </div>
-<div className="flex-col pt-7 pb-12 font-bold text-text items-center h-[2rem] w-full">Sugerencias</div>
-            <div className="w-full flex-1 overflow-y-auto pr-2">
-             
-                <div className="w-full flex items-center pt-4 pb-4">
-                    <img
-                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                        className="w-10 h-10 object-cover rounded-full"
-                    />
-                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
-                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
-                    </div>
-                </div>
-
-                <div className="w-full flex items-center pt-4 pb-4">
-                    <img
-                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                        className="w-10 h-10 object-cover rounded-full"
-                    />
-                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
-                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
-                    </div>
-                </div>
-
-                <div className="w-full flex items-center pt-4 pb-4">
-                    <img
-                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                        className="w-10 h-10 object-cover rounded-full"
-                    />
-                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
-                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
-                    </div>
-                </div>
-
-                <div className="w-full flex items-center pt-4 pb-4">
-                    <img
-                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                        className="w-10 h-10 object-cover rounded-full"
-                    />
-                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
-                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
-                    </div>
-                </div>
-
-                <div className="w-full flex items-center pt-4 pb-4">
-                    <img
-                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                        className="w-10 h-10 object-cover rounded-full"
-                    />
-                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
-                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
-                    </div>
-                </div>
-
+            <img
+              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+              className="w-10 h-10 object-cover rounded-full"
+            />
+            <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+              <span className="text-[1rem] text-text font-bold truncate">
+                NombreMuyLargoDeEjemplo
+              </span>
+              <span className="text-[1rem] text-gray-600 truncate">
+                usuario_muy_largo_123
+              </span>
             </div>
+          </div>
+        </div>
+        <div className="flex-col pt-7 pb-12 font-bold text-text items-center h-[2rem] w-full">
+          Sugerencias
+        </div>
+
+        <div className="w-full flex-1 overflow-y-auto pr-2">
+          <div className="w-full flex items-center pt-4 pb-4">
+            <img
+              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+              className="w-10 h-10 object-cover rounded-full"
+            />
+            <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+              <span className="text-[1rem] text-text font-bold truncate">
+                NombreMuyLargoDeEjemplo
+              </span>
+              <span className="text-[1rem] text-gray-600 truncate">
+                usuario_muy_largo_123
+              </span>
+            </div>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="w-full flex items-center pt-4 pb-4">
+            <img
+              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+              className="w-10 h-10 object-cover rounded-full"
+            />
+            <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+              <span className="text-[1rem] text-text font-bold truncate">
+                NombreMuyLargoDeEjemplo
+              </span>
+              <span className="text-[1rem] text-gray-600 truncate">
+                usuario_muy_largo_123
+              </span>
+            </div>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+                />
+              </svg>
+            </button>
+          </div>
+            <div className="w-full flex items-center pt-4 pb-4">
+            <img
+              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+              className="w-10 h-10 object-cover rounded-full"
+            />
+            <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+              <span className="text-[1rem] text-text font-bold truncate">
+                NombreMuyLargoDeEjemplo
+              </span>
+              <span className="text-[1rem] text-gray-600 truncate">
+                usuario_muy_largo_123
+              </span>
+            </div>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="w-full flex items-center pt-4 pb-4">
+            <img
+              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+              className="w-10 h-10 object-cover rounded-full"
+            />
+            <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+              <span className="text-[1rem] text-text font-bold truncate">
+                NombreMuyLargoDeEjemplo
+              </span>
+              <span className="text-[1rem] text-gray-600 truncate">
+                usuario_muy_largo_123
+              </span>
+            </div>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
 
         {/* <div className="flex-col items-center h-[5rem] w-full"></div> */}
 
@@ -276,8 +349,6 @@ const SidebarRight = ({
             </a>
           </li>
         </ul> */}
-
-       
       </div>
     </>
   );

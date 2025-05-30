@@ -78,7 +78,7 @@ export default function Home() {
           <div className="max-w-4xl hidden lg:block mx-auto text-center text-xl font-semibold">
             <Nav />
           </div>
-            <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+            <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold pl-4 p-4">
             <NavSm />
           </div>
           <div className="hidden lg:block max-w-4xl mx-auto text-center text-xl font-semibold">
@@ -93,7 +93,7 @@ export default function Home() {
           </div>
         </main>
           <header className="bg-gray-100 text-white py-4 lg:shadow-md sticky top-0 z-20">
-          <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+          <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold pl-4">
             <NavSmFooter />
           </div>
         </header>

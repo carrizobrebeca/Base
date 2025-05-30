@@ -64,7 +64,7 @@ export default function NavProfile() {
         
       </div>
 
-      <div className="max-w-4xl mx-auto text-center text-xl font-semibold  ">
+      <div className="max-w-4xl mx-auto text-center text-xl pt-4 font-semibold  ">
         <div className="flex justify-between border-b-2 border-gray-300">
 
           <div class="relative size-16 text-gray-600 flex items-center ">
