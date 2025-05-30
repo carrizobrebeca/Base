@@ -23,7 +23,7 @@ const SidebarLeft = ({
         <div className="w-full flex items-center pb-8">
           <span
             id="menubtn"
-            onClick={handleToggle}
+            
             className="text-[2.1rem] text-red-400 font-bold cursor-pointer overflow-hidden"
           >
             {minimized ? "E" : "Evently"}
@@ -39,6 +39,7 @@ const SidebarLeft = ({
               onClick={(e) => {
                 e.preventDefault();
                 onDefaultClick();
+                navigate("/home");
               }}
               className="flex py-[0.55rem] px-0 rounded-xl hover:bg-header"
             >
@@ -69,6 +70,7 @@ const SidebarLeft = ({
                 e.preventDefault();
                 handleToggle(e);
                 onSearchClick();
+               
               }}
               className="flex py-[0.55rem] px-0 rounded-xl hover:bg-header"
             >
@@ -98,6 +100,7 @@ const SidebarLeft = ({
               onClick={(e) => {
                 e.preventDefault();
                 onDefaultClick();
+                navigate("/explore");
               }}
               className="flex py-[0.55rem] px-0 rounded-xl hover:bg-header"
             >

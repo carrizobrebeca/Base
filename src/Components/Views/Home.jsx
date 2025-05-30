@@ -7,6 +7,8 @@ import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
 import SidebarLeftNotification from "../Pages/SidebarLeftNotification";
 import SidebarLeftSearch from "../Pages/SidebarLeftSearch";
 import { useNavigate } from "react-router-dom";
+import NavSmFooter from "../Pages/NavSmFooter";
+import NavSm from "../Pages/NavSm";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -72,9 +74,12 @@ export default function Home() {
       {/* MAIN AREA */}
       <div className="flex-1 flex flex-col lg:ml-64 lg:mr-64 h-screen overflow-hidden">
         {/* NAVBAR */}
-        <header className="bg-blue-600 text-white py-4 shadow-md sticky top-0 z-10">
-          <div className="max-w-4xl mx-auto text-center text-xl font-semibold">
+        <header className="bg-gray-100 text-white py-4 sticky top-0 z-10">
+          <div className="max-w-4xl hidden lg:block mx-auto text-center text-xl font-semibold">
             <Nav />
+          </div>
+            <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+            <NavSm />
           </div>
           <div className="hidden lg:block max-w-4xl mx-auto text-center text-xl font-semibold">
             <Header />
@@ -87,6 +92,11 @@ export default function Home() {
             Contenido de prueba largo
           </div>
         </main>
+          <header className="bg-gray-100 text-white py-4 lg:shadow-md sticky top-0 z-20">
+          <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+            <NavSmFooter />
+          </div>
+        </header>
       </div>
     </div>
   );

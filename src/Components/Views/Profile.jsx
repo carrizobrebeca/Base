@@ -3,6 +3,10 @@ import Header from "../Pages/Header";
 import Nav from "../Pages/Nav";
 import SidebarLeft from "../Pages/SidebarLeft";
 import SidebarRight from "../Pages/SidebarRight";
+import NavSm from "../Pages/NavSm";
+import NavSmFooter from "../Pages/NavSmFooter";
+import NavSmProfile from "../Pages/NavSmProfile";
+import NavProfile from "../Pages/NavProfile";
 
 export default function Profile() {
   const [activePanel, setActivePanel] = useState(null);
@@ -35,13 +39,14 @@ export default function Profile() {
       {/* MAIN AREA */}
       <div className="flex-1 flex flex-col lg:ml-64 lg:mr-64 h-screen overflow-hidden">
         {/* NAVBAR */}
-        <header className="bg-blue-600 text-white py-4 shadow-md sticky top-0 z-20">
+        <header className="bg-gray-100 text-white py-4 sticky top-0 z-20">
           <div className="max-w-4xl mx-auto text-center text-xl font-semibold">
-            <Nav />
+            <NavProfile />
           </div>
-          <div className="hidden lg:block max-w-4xl mx-auto text-center text-xl font-semibold">
-            <Header />
-          </div>
+          {/* <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+            <NavSmProfile />
+          </div> */}
+
         </header>
 
         {/* MAIN SCROLLABLE CONTENT */}
@@ -50,6 +55,11 @@ export default function Profile() {
           <p>Este contenido se muestra entre los sidebars.</p>
           <div className="h-[200vh] bg-gray-100 mt-8">Contenido de prueba largo</div>
         </main>
+        <header className="bg-gray-100 text-white py-4 lg:shadow-md sticky top-0 z-20">
+          <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+            <NavSmFooter />
+          </div>
+        </header>
       </div>
     </div>
   );

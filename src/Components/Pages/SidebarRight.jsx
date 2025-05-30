@@ -18,18 +18,80 @@ const SidebarRight = ({
         className={`bg-bg flex flex-col items-center w-full h-[100%] border br-2 border-border py-[1.4rem] px-[1rem] transition-all duration-500 ease-in-out`}
       >
         <div className="w-full flex items-center pb-8">
-          <span
-            id="menubtn"
-            onClick={handleToggle}
-            className="text-[2.1rem] text-red-400 font-bold cursor-pointer overflow-hidden"
-          >
-            {minimized ? "E" : "Evently"}
-          </span>
+          <div className="w-full flex items-center pt-4">
+                    <img
+                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                        className="w-10 h-10 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
+                    </div>
+                </div>
         </div>
+<div className="flex-col pt-7 pb-12 font-bold text-text items-center h-[2rem] w-full">Sugerencias</div>
+            <div className="w-full flex-1 overflow-y-auto pr-2">
+             
+                <div className="w-full flex items-center pt-4 pb-4">
+                    <img
+                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                        className="w-10 h-10 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
+                    </div>
+                </div>
+
+                <div className="w-full flex items-center pt-4 pb-4">
+                    <img
+                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                        className="w-10 h-10 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
+                    </div>
+                </div>
+
+                <div className="w-full flex items-center pt-4 pb-4">
+                    <img
+                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                        className="w-10 h-10 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
+                    </div>
+                </div>
+
+                <div className="w-full flex items-center pt-4 pb-4">
+                    <img
+                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                        className="w-10 h-10 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
+                    </div>
+                </div>
+
+                <div className="w-full flex items-center pt-4 pb-4">
+                    <img
+                        src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                        className="w-10 h-10 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                        <span className="text-[1rem] text-text font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                        <span className="text-[1rem] text-gray-600 truncate">usuario_muy_largo_123</span>
+                    </div>
+                </div>
+
+            </div>
 
         {/* <div className="flex-col items-center h-[5rem] w-full"></div> */}
 
-        <ul className="w-full flex-col gap-[0.8rem]">
+        {/* <ul className="w-full flex-col gap-[0.8rem]">
           <li className="relative overflow-hidden">
             <a
               href="#"
@@ -213,13 +275,9 @@ const SidebarRight = ({
               )}
             </a>
           </li>
-        </ul>
+        </ul> */}
 
-        <footer className="w-full mt-auto flex items-center">
-          <h3 className="text-[0.7rem] text-text">
-            {minimized ? "" : "© 2025 REBECA CARRIZO BOURLOT"}
-          </h3>
-        </footer>
+       
       </div>
     </>
   );

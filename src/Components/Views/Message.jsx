@@ -5,6 +5,7 @@ import SidebarLeft from "../Pages/SidebarLeft";
 import SidebarRight from "../Pages/SidebarRight";
 import { useNavigate } from "react-router-dom";
 import ContactMessage from "../Pages/ContactMessage";
+import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
 
 export default function Message() {
   const [activePanel, setActivePanel] = useState(null);
@@ -36,7 +37,7 @@ export default function Message() {
 
       {/* RIGHT SIDEBAR PEGADO AL LEFT */}
       <aside className="hidden lg:flex fixed left-64 top-0 h-screen w-64 flex-col bg-gray-100 p-4 border-r z-10">
-        <ContactMessage />
+        <SidebarLeftMessage />
       </aside>
 
       {/* MAIN AREA */}
