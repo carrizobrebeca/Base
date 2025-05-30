@@ -8,6 +8,8 @@ import Home from "./Components/Views/Home";
 import Message from "./Components/Views/Message";
 import Explore from "./Components/Views/Explore";
 import Profile from "./Components/Views/Profile";
+import ProfileUser from "./Components/Views/ProfileUser";
+import ProfileEvent from "./Components/Views/ProfileEvent";
 
 function App() {
   return (
@@ -17,8 +19,12 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />{" "}
         <Route path="/explore" element={<Explore />} />
-                <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
+         <Route path="/profileuser" element={<ProfileUser />} />
+         <Route path="/profileevent" element={<ProfileEvent />} />
         <Route path="/message" element={<Message />} />
+ 
+        
       </Routes>
     </Router>
   );

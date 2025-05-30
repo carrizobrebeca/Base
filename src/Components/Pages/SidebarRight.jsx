@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SidebarRight = ({
   minimized,
@@ -8,6 +9,7 @@ const SidebarRight = ({
   onSearchClick,
   onDefaultClick,
 }) => {
+  const navigate = useNavigate();
   const handleToggle = (e) => {
     e.preventDefault();
     setMinimized((prev) => !prev);
@@ -18,7 +20,10 @@ const SidebarRight = ({
         className={`bg-bg flex flex-col items-center w-full h-[100%] border br-2 border-border py-[1.4rem] px-[1rem] transition-all duration-500 ease-in-out`}
       >
         <div className="w-full flex items-center pb-8">
-          <div className="w-full flex items-center pt-4">
+          <div    onClick={() => {
+               
+                navigate("/profileuser")
+              }}className="w-full flex items-center pt-4">
             <img
               src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
               className="w-10 h-10 object-cover rounded-full"

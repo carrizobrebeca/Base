@@ -7,7 +7,7 @@ const NavSmProfile = () => {
    
       <header className="bg-gray-100 p-4">
         <div className="text-xl font-semibold">
-          <div className="grid grid-cols-3 gap-6 justify-items-center">
+          <div className="grid grid-cols-3 gap-6 justify-items-center ">
             <div className="text-gray-600 flex items-center">
              <h2>Usuario</h2>
             </div>
