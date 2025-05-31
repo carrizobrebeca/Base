@@ -14,6 +14,7 @@ import Search from "./Components/Pages/Search";
 import NotificationSm from "./Components/Pages/NotificationSm";
 import MessageSm from "./Components/Pages/MessageSm";
 import PostMax from "./Components/Pages/PostMax";
+import Register from "./Components/Views/Register";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />{" "}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/search" element={<Search />} />
         <Route path="/notification" element={<NotificationSm />} />
