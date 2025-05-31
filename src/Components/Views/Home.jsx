@@ -38,20 +38,20 @@ export default function Home() {
           onSearchClick={() => handlePanelOpen("search")}
           onDefaultClick={handleResetSidebar}
         />
-        
+
       </aside>
-        <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col p-4 z-20">
+      <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col p-4 z-20">
         <SidebarLeft
           minimized={isSidebarMinimized}
           setMinimized={setIsSidebarMinimized}
           onMessagesClick={() => {
-    handlePanelOpen("message");
-    navigate("/message"); 
-  }}
-  onProfileClick={() => {
-    handlePanelOpen("profile");
-    navigate("/profile"); 
-  }}
+            handlePanelOpen("message");
+            navigate("/message");
+          }}
+          onProfileClick={() => {
+            handlePanelOpen("profile");
+            navigate("/profile");
+          }}
           onNotificationsClick={() => handlePanelOpen("notifications")}
           onSearchClick={() => handlePanelOpen("search")}
           onDefaultClick={handleResetSidebar}
@@ -60,8 +60,8 @@ export default function Home() {
           <div className="absolute inset-0 z-10 pointer-events-none">
             <div className="pointer-events-auto">
               {/* {activePanel === "messages" && <SidebarLeftMessage />} */}
-               {activePanel === 'notifications' && <SidebarLeftNotification />} 
-              {activePanel === 'search' && <SidebarLeftSearch />} 
+              {activePanel === 'notifications' && <SidebarLeftNotification />}
+              {activePanel === 'search' && <SidebarLeftSearch />}
             </div>
           </div>
         )}
@@ -79,7 +79,7 @@ export default function Home() {
           <div className="max-w-4xl hidden lg:block mx-auto text-center text-xl font-semibold">
             <Nav />
           </div>
-            <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold pl-4 p-4">
+          <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold pl-4 p-4">
             <NavSm />
           </div>
           <div className="hidden lg:block max-w-4xl mx-auto text-center text-xl font-semibold">
@@ -89,11 +89,11 @@ export default function Home() {
 
         {/* MAIN SCROLLABLE CONTENT */}
         <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-gray-100 w-full hide-scrollbar">
-          <div className="h-[200vh] bg-gray-100 ">
-              <Post />
+          <div className="h-[200vh] bg-gray-100">
+            <Post />
           </div>
         </main>
-          <header className="bg-gray-100 text-white lg:shadow-md sticky top-0 z-20">
+        <header className="bg-gray-100 text-white lg:shadow-md sticky top-0 z-20">
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold pl-4">
             <NavSmFooter />
           </div>

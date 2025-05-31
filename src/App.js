@@ -10,6 +10,10 @@ import Explore from "./Components/Views/Explore";
 import Profile from "./Components/Views/Profile";
 import ProfileUser from "./Components/Views/ProfileUser";
 import ProfileEvent from "./Components/Views/ProfileEvent";
+import Search from "./Components/Pages/Search";
+import NotificationSm from "./Components/Pages/NotificationSm";
+import MessageSm from "./Components/Pages/MessageSm";
+import PostMax from "./Components/Pages/PostMax";
 
 function App() {
   return (
@@ -19,12 +23,14 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />{" "}
         <Route path="/explore" element={<Explore />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/notification" element={<NotificationSm />} />
         <Route path="/profile" element={<Profile />} />
-         <Route path="/profileuser" element={<ProfileUser />} />
-         <Route path="/profileevent" element={<ProfileEvent />} />
+        <Route path="/profileuser" element={<ProfileUser />} />
+        <Route path="/profileevent" element={<ProfileEvent />} />
         <Route path="/message" element={<Message />} />
- 
-        
+        <Route path="/messagesm" element={<MessageSm />} />
+        <Route path="/max" element={<PostMax />} />
       </Routes>
     </Router>
   );

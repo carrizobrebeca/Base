@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContactMessage = () => {
+const Search = () => {
 
   return (
     <>
@@ -520,4 +520,4 @@ const ContactMessage = () => {
   );
 };
 
-export default ContactMessage;
+export default Search;

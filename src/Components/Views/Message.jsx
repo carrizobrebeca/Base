@@ -1,10 +1,6 @@
 import { useState } from "react";
-import Header from "../Pages/Header";
-import Nav from "../Pages/Nav";
 import SidebarLeft from "../Pages/SidebarLeft";
-import SidebarRight from "../Pages/SidebarRight";
 import { useNavigate } from "react-router-dom";
-import ContactMessage from "../Pages/ContactMessage";
 import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
 
 export default function Message() {
@@ -66,7 +62,7 @@ export default function Message() {
               className="w-10 h-10 lg:w-20 lg:h-20  object-cover rounded-full"
             />
 
-            <div className="flex flex-col ">
+            <div onClick={() => navigate("/profileuser")} className="flex flex-col ">
               <h2 className="text-sm lg:text-xl">Nombre</h2>
               <h3 className="text-sm lg:text-sm">Usuario</h3>
             </div>
