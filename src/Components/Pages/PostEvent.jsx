@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchLogin } from "../../store/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
-const PostEvent = () => {
+import axios from "axios";
+const Login = () => {
   const navigate = useNavigate();
  const dispatch = useDispatch();
   const { status } = useSelector((state) => state.login);
@@ -117,4 +117,4 @@ const disable = () => {
   );
 };
 
-export default PostEvent;
+export default Login;

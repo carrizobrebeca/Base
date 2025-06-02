@@ -89,7 +89,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold pl-4 p-4">
             <NavSm />
           </div>
-          <div className="hidden lg:block max-w-4xl mx-auto text-center text-xl font-semibold">
+          <div className="hidden lg:block max-w-4xl text-center text-xl font-semibold">
             <Header />
           </div>
         </header>

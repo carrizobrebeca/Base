@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const NavSmProfileUser = () => {
+const NavSmProfileUser = ({ user }) => {
   const navigate = useNavigate();
   return (
     <div>
@@ -14,7 +14,7 @@ const NavSmProfileUser = () => {
               </svg>
             </div>
             <div className="text-gray-600 flex items-center">
-              <h2>Usuario</h2>
+              <h2>{user.userName}</h2>
             </div>
           </div>
         </div>

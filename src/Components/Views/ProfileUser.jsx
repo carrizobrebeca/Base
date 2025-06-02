@@ -5,8 +5,14 @@ import NavSmFooter from "../Pages/NavSmFooter";
 import NavSmProfileSecond from "../Pages/NavSmProfileSecond";
 import HeaderProfileUser from "../Pages/HeaderProfileUser";
 import NavSmProfileUser from "../Pages/NavSmProfileUser";
+import { useLocation } from "react-router-dom";
 
 export default function ProfileUser() {
+  const location = useLocation();
+  const selectedUser = location.state?.selectedUser;
+
+  console.log(selectedUser);
+
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
@@ -39,9 +45,9 @@ export default function ProfileUser() {
         <header className="bg-gray-100 text-white sticky top-0 z-20">
 
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
-            <NavSmProfileUser />
-            <HeaderProfileUser />
-            <NavSmProfileSecond />
+            <NavSmProfileUser user={selectedUser}/>
+            <HeaderProfileUser user={selectedUser}/>
+            <NavSmProfileSecond user={selectedUser}/>
           </div>
 
         </header>
@@ -78,7 +84,7 @@ export default function ProfileUser() {
         </main>
         <header className="bg-gray-100 text-white lg:shadow-md sticky top-0 z-20 pl-4">
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
-            <NavSmFooter />
+            <NavSmFooter user={selectedUser}/>
 
           </div>
         </header>
