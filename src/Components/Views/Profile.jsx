@@ -10,10 +10,13 @@ import NavSmProfile from "../Pages/NavSmProfile";
 import NavProfile from "../Pages/NavProfile";
 import NavSmProfileSecond from "../Pages/NavSmProfileSecond";
 import HeaderProfile from "../Pages/HeaderProfile";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
+  
+   const user = useSelector((state) => state.login.user);
 
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../Pages/Header";
 import Nav from "../Pages/Nav";
 import SidebarLeft from "../Pages/SidebarLeft";
@@ -10,8 +10,15 @@ import { useNavigate } from "react-router-dom";
 import NavSmFooter from "../Pages/NavSmFooter";
 import NavSm from "../Pages/NavSm";
 import Post from "../Pages/Post";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+
+ const { user } = useSelector((state) => state.login);
+
+
+
+
   const navigate = useNavigate();
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);

@@ -15,10 +15,12 @@ import NotificationSm from "./Components/Pages/NotificationSm";
 import MessageSm from "./Components/Pages/MessageSm";
 import PostMax from "./Components/Pages/PostMax";
 import Register from "./Components/Views/Register";
+import Chat from "./Components/Views/Chat";
+import ProfileUpdate from "./Components/Views/ProfileUpdate";
 
 function App() {
   return (
-    <Router>
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
@@ -33,8 +35,10 @@ function App() {
         <Route path="/message" element={<Message />} />
         <Route path="/messagesm" element={<MessageSm />} />
         <Route path="/max" element={<PostMax />} />
+         <Route path="/chat" element={<Chat />} />
+    <Route path="/profileupdate" element={<ProfileUpdate />} />
       </Routes>
-    </Router>
+  
   );
 }
 

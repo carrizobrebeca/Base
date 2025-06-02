@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -11,10 +12,15 @@ const Landing = () => {
 
     return () => clearTimeout(timer);
   }, [navigate]);
-  return (
-    <div className='fixed top-0 left-0 flex justify-center items-center bg-gray-800 h-screen w-full'>
-        <div className=' text-6xl text-gray-300 text-bold animate-pulse'>Evently</div>
 
+  return (
+    <div className="relative bg-gray-800 h-screen w-full flex justify-center items-center">
+      <div className="text-6xl text-gray-300 font-bold animate-pulse">
+        <h2>Evently</h2>
+      </div>
+      <div className="absolute bottom-6 w-full flex justify-center">
+        <h2 className="text-gray-500">© 2025 REBECA CARRIZO BOURLOT</h2>
+      </div>
     </div>
   )
 }

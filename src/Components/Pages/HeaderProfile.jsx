@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const HeaderProfile = () => {
   const navigate = useNavigate();
+    const user = useSelector((state) => state.login.user);
   return (
     <div>
       <header className="bg-white p-4">
@@ -9,9 +11,8 @@ const HeaderProfile = () => {
           <div className="grid grid-cols-3 gap-6 justify-items-center">
             <div className="text-gray-600 flex items-center w-30 h-30">
               <img
-                src=
-                "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-                className=" object-cover rounded-full "
+                src={user?.image}
+                className=" object-cover rounded-full h-[100px]"
               />
             </div>
             <div className="text-gray-600 flex items-center ">
