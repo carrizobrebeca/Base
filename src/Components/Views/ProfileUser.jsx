@@ -11,8 +11,6 @@ export default function ProfileUser() {
   const location = useLocation();
   const selectedUser = location.state?.selectedUser;
 
-  console.log(selectedUser);
-
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
@@ -25,6 +23,8 @@ export default function ProfileUser() {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
+
+  
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">

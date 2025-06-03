@@ -1,10 +1,10 @@
 .chat-box{
-    height: 75vh;
+    height: 94vh;
     position: relative;
     background-color: #f1f5ff;
 }
 .chat-user{
-   padding: 10px 15px;
+   padding: 1px 15px;
    display: flex;
    align-items: center;
    gap: 10px;

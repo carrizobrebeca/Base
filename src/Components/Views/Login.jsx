@@ -47,24 +47,38 @@ const disable = () => {
     return Object.values(errors).some((error) => error !== "");
   };
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormSubmitted(false);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setFormSubmitted(false);
   
-    if (!disable()) {
-      dispatch(fetchLogin(state))
-        .unwrap()
-        .then((response) => {
-          localStorage.setItem('id', response.id); // Guardar el ID de usuario en localStorage
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  };
+  //   if (!disable()) {
+  //     dispatch(fetchLogin(state))
+  //       .unwrap()
+  //       .then((response) => {
+  //         localStorage.setItem('id', response.id); // Guardar el ID de usuario en localStorage
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   }
+  // };
 
 
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setFormSubmitted(false);
 
+  if (!disable()) {
+    dispatch(fetchLogin(state))
+      .unwrap()
+      .then(() => {
+        // No hace falta guardar nada manual, ya está en el slice y localStorage
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+};
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center bg-gray-800 h-screen w-full ">

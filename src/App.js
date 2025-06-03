@@ -17,6 +17,8 @@ import PostMax from "./Components/Pages/PostMax";
 import Register from "./Components/Views/Register";
 import Chat from "./Components/Views/Chat";
 import ProfileUpdate from "./Components/Views/ProfileUpdate";
+import PostEvent from "./Components/Pages/PostEvent";
+import PostPost from "./Components/Pages/PostPost";
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/notification" element={<NotificationSm />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/postevent" element={<PostEvent />} />
         <Route path="/profileuser" element={<ProfileUser />} />
         <Route path="/profileevent" element={<ProfileEvent />} />
         <Route path="/message" element={<Message />} />
@@ -37,6 +40,8 @@ function App() {
         <Route path="/max" element={<PostMax />} />
          <Route path="/chat" element={<Chat />} />
     <Route path="/profileupdate" element={<ProfileUpdate />} />
+       <Route path="/post" element={<PostPost />} />
+      
       </Routes>
   
   );

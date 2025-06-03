@@ -6,16 +6,16 @@ const NavSearch = () => {
   return (
     <div className="bg-white text-gray-600 w-full flex justify-between">
       <div className="mt-2 ml-4 mb-2 mr-4 bg-white flex w-full items-center">
-        <svg onClick={()=> navigate("/home")} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-</svg>
+        <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
 
         <input
           type="text"
           className="flex-grow rounded-full bg-gray-100 pl-4 py-2 mr-2 ml-2"
           placeholder="Buscar..."
         />
-        <svg onClick={()=> navigate("/profileuser")}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

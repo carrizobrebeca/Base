@@ -2,60 +2,110 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchLogin } from "../../store/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
-
 import axios from "axios";
-const Login = () => {
+import moment from "moment";
+import SidebarLeft from "./SidebarLeft";
+import NavSmProfile from "./NavSmProfile";
+import NavSmFooter from "./NavSmFooter";
+import post from "../../assets/post.PNG";
+import { fetchNewEvent } from "../../store/eventSlice";
+const PostEvent = () => {
   const navigate = useNavigate();
- const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.login.user);
+  // const { status } = useSelector((state) => state.login);
+
+  const eventStatus = useSelector((state) => state.event.status);
+  const eventError = useSelector((state) => state.event.error);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [activePanel, setActivePanel] = useState(null);
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
+
+  const handlePanelOpen = (panel) => {
+    setActivePanel(panel);
+    setIsSidebarMinimized(true);
+  };
+
+  const handleResetSidebar = () => {
+    setIsSidebarMinimized(false);
+    setActivePanel(null);
+  };
+
+
   const [state, setState] = useState({
-    userName: "",
-    password: "",
+    name: "",
+    title: "",
+    image: "https://i.pinimg.com/474x/75/01/5a/75015a19db67c5ca6f18ef7e000d0a61.jpg",
+    type: "",
+    location: "",
+    eventDate:"",
+    eventTime:"",
+
   });
-  const [errors, setErrors] = useState({
-    userName: "userName no puede estar vacío",
-    password: "Password no puede estar vacía",
+  const [error, setError] = useState({
+    name: "*",
+    title: "*",
+    type: "*",
+    location: "*",
+  // eventDate:"*",
+  //   eventTime:"*",
   });
-  const [showPassword, setShowPassword] = useState(false);
+
+
 
   useEffect(() => {
-    if (status === "succeeded") {
+    if (eventStatus === "succeeded" && formSubmitted) {
       navigate("/home");
     }
-  }, [status, navigate]);
+  }, [eventStatus, formSubmitted, navigate]);
 
-  const validate = (state, name) => {
-    if (name === "userName") {
-      setErrors({ ...errors, userName: state.userName === "" ? "userName no puede estar vacío" : "" });
+  useEffect(() => {
+    if (eventStatus === "failed" && eventError) {
+      alert(eventError);
     }
-
-    if (name === "password") {
-      setErrors({ ...errors, password: state.password === "" ? "Password no puede estar vacío" : "" });
-    }
-  };
+  }, [eventStatus, eventError]);
 
   const handleChange = (e) => {
-    e.preventDefault();
     const { name, value } = e.target;
 
-    setState({ ...state, [name]: value });
-    validate({ ...state, [name]: value }, name);
+    setState((prev) => ({
+      ...prev,
+      [name]: name === "image" && value.trim() === ""
+        ? "https://i.pinimg.com/474x/75/01/5a/75015a19db67c5ca6f18ef7e000d0a61.jpg"
+        : value,
+    }));
+
+    validate(
+      {
+        ...state,
+        [name]: value,
+      },
+      name
+    );
   };
-const disable = () => {
+
+
+  const disable = () => {
     if (formSubmitted) return true;
-    return Object.values(errors).some((error) => error !== "");
+    return Object.values(error).some((error) => error !== "");
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(false);
-  
+const trimmedTime = moment(state.eventTime, 'HH:mm').format('HH:mm');
+const formattedDate = moment(state.eventDate, ['DD-MM-YYYY', 'DD/MM/YYYY']).format('YYYY-MM-DD');
     if (!disable()) {
-      dispatch(fetchLogin(state))
+      dispatch(fetchNewEvent({
+        ...state,
+        eventTime: trimmedTime,
+        eventDate: formattedDate,
+        creatorId: user?.id
+      }))
         .unwrap()
         .then((response) => {
-          localStorage.setItem('id', response.id); // Guardar el ID de usuario en localStorage
+          navigate("/home");
         })
         .catch((err) => {
           console.error(err);
@@ -65,56 +115,188 @@ const disable = () => {
 
 
 
+  const validate = (state, name) => {
+    if (name === "name") {
+      if (state.name === "") {
+        setError((prev) => ({ ...prev, name: "Nombre no puede estar vacío" }));
+      } else {
+        setError((prev) => ({ ...prev, name: "" }));
+      }
+    }
+    if (name === "title") {
+      if (state.title === "") {
+        setError((prev) => ({ ...prev, title: "Título no puede estar vacío" }));
+      } else {
+        setError((prev) => ({ ...prev, title: "" }));
+      }
+    }
+    if (name === "location") {
+      if (state.location === "") {
+        setError((prev) => ({ ...prev, location: "Lugar no puede estar vacío" }));
+      } else {
+        setError((prev) => ({ ...prev, location: "" }));
+      }
+    }
+    if (name === "type") {
+      if (state.type === "") {
+        setError((prev) => ({ ...prev, type: "Tipo no puede estar vacío" }));
+      } else {
+        setError((prev) => ({ ...prev, type: "" }));
+      }
+    }
+  };
 
   return (
-    <div className="fixed top-0 left-0 flex justify-center items-center bg-gray-800 h-screen w-full ">
-      <div className="flex items-center">
-       <div className="w-[20rem] h-[30rem] flex flex-col items-center bg-red-300 rounded-xl">
-  <form
-    className="w-full h-full mb-4 flex items-center shadow-md bg-white font-momo rounded-xl"
-    onSubmit={handleSubmit}
-  >
-    <div className="p-14">
-      <div>
-        <h2 className="pt-4 pb-4 font-bold text-red-400">Bienvenido</h2>
-      </div>
-      <div className="pb-4">
-        <input
-          className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
-          type="text" placeholder="Usuario" onChange={handleChange}
-          name="userName"
-          id="userName"
-        />
+    <div>
+      <div className="flex min-h-screen overflow-hidden bg-white relative">
+
+        <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col p-4 border-r z-10">
+          <SidebarLeft
+            minimized={isSidebarMinimized}
+            setMinimized={setIsSidebarMinimized}
+            onMessagesClick={() => handlePanelOpen("messages")}
+            onNotificationsClick={() => handlePanelOpen("notifications")}
+            onSearchClick={() => handlePanelOpen("search")}
+            onDefaultClick={handleResetSidebar}
+          />
+        </aside>
+
+        <div className="flex-1 flex flex-col lg:ml-64 lg:mr-64 h-screen overflow-hidden">
+          <header className="bg-white text-white sticky top-0 z-20">
+            <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+              <NavSmProfile />
+            </div>
+          </header>
+
+          {/* MAIN SCROLLABLE CONTENT */}
+          <main className="flex-1 max-w-4xl mx-auto p-4 bg-white w-full ">
+            <div className="h-full bg-white">
+              <>
+                <form
+                  className="w-full h-full pb-4 flex items-center bg-white font-momo rounded-xl"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="p-14">
+                    <div className="pb-4">
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="text"
+                        placeholder="Nombre del evento"
+                        required
+                        name="name"
+                        id="name"
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="pb-4 relative">
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="text"
+                        placeholder="Tipo de evento"
+                        required
+                        name="type"
+                        id="type"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="pb-4 relative"> {/* <- AGREGÁ ESTO */}
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="text"
+                        placeholder="Tìtulo"
+                        required
+                        name="title"
+                        id="title"
+                        onChange={handleChange}
+                      />
+                    </div>
+                      <div className="pb-4">
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="date"
+                        placeholder="12-03-2025"
+                        required
+
+                        name="eventDate"
+                        id="eventDate"
+                        onChange={handleChange}
+                      />
+                    </div>
+                      <div className="pb-4">
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="time"
+                        placeholder="22:30"
+                        required
+
+                        name="eventTime"
+                        id="eventTime"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="pb-4">
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="text"
+                        placeholder="Ciudad, Provincia, Pais"
+                        required
+
+                        name="location"
+                        id="location"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="pb-4">
+                      <input
+                        className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
+                        type="text"
+                        placeholder="URL de la imagen"
+
+                        name="image"
+                        id="image"
+                        onChange={handleChange}
+                      />
+                    </div> <img className='w-full aspect-square rounded-lg' src={state.image || "https://i.pinimg.com/474x/75/01/5a/75015a19db67c5ca6f18ef7e000d0a61.jpg"}
+                      alt="Vista previa"
+                    />
+                    <div className="pt-2 pb-4 flex justify-center">
+                      <button
+                        type="submit"
+                        className="bg-red-400 rounded-xl text-white p-2 disabled:opacity-50"
+                        disabled={disable()}
+                      >
+                        Publicar
+                      </button>
+                    </div>
+
+
+                  </div>
+                </form>
+
+              </>
+            </div>
+          </main>
+          <header className="bg-gray-100 text-white lg:shadow-md sticky top-0 z-20 pl-4">
+            <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
+              <NavSmFooter />
+            </div>
+          </header>
+        </div>
       </div>
 
-      <div>
-        <input
-          className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
-          type="text" placeholder="Contraseña" onChange={handleChange}
-            name="password"
-            id="password"
-        />
-      </div>
-      <div className="pt-4 pb-4 flex justify-center">
-        <button type="submit" className="bg-red-400 rounded-xl text-white p-2">
-          Iniciar sesión
-        </button>
-      </div>
-    </div>
-  </form>
 
-  {/* Botón Registrarse centrado con margen arriba */}
-  <div className="mt-2 pb-4">
-    <button onClick={()=> navigate("/register")}  className="bg-red-400 rounded-xl text-white p-2 border-2 border-white">
-      Registrarse
-    </button>
-  </div>
-</div>
 
-        
-      </div>
+
+
+
+
+
     </div>
   );
 };
 
-export default Login;
+export default PostEvent;
+
+
+
