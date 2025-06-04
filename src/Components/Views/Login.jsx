@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { fetchLogin } from "../../store/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
-const PostEvent = () => {
+const Login = () => {
   const navigate = useNavigate();
  const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.login);
+  // const { status } = useSelector((state) => state.login);  
+const { status, token, user } = useSelector((state) => state.login);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [state, setState] = useState({
     userName: "",
@@ -19,12 +19,16 @@ const PostEvent = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    if (status === "succeeded") {
-      navigate("/home");
-    }
-  }, [status, navigate]);
-
+  // useEffect(() => {
+  //   if (status === "succeeded") {
+  //     navigate("/home");
+  //   }
+  // }, [status, navigate]);
+useEffect(() => {
+  if (token) {
+    navigate("/home");
+  }
+}, [token, navigate]);
   const validate = (state, name) => {
     if (name === "userName") {
       setErrors({ ...errors, userName: state.userName === "" ? "userName no puede estar vacío" : "" });
@@ -47,38 +51,24 @@ const disable = () => {
     return Object.values(errors).some((error) => error !== "");
   };
   
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setFormSubmitted(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormSubmitted(false);
   
-  //   if (!disable()) {
-  //     dispatch(fetchLogin(state))
-  //       .unwrap()
-  //       .then((response) => {
-  //         localStorage.setItem('id', response.id); // Guardar el ID de usuario en localStorage
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   }
-  // };
+    if (!disable()) {
+      dispatch(fetchLogin(state))    
+        .unwrap()
+        .then((response) => {
+          localStorage.setItem('id', response.id); // Guardar el ID de usuario en localStorage
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  };
 
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  setFormSubmitted(false);
 
-  if (!disable()) {
-    dispatch(fetchLogin(state))
-      .unwrap()
-      .then(() => {
-        // No hace falta guardar nada manual, ya está en el slice y localStorage
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-};
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center bg-gray-800 h-screen w-full ">
@@ -131,4 +121,4 @@ const handleSubmit = (e) => {
   );
 };
 
-export default PostEvent;
+export default Login;

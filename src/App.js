@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from "./Components/Views/Landing";
 
 import Login from "./Components/Views/Login";
@@ -19,30 +19,43 @@ import Chat from "./Components/Views/Chat";
 import ProfileUpdate from "./Components/Views/ProfileUpdate";
 import PostEvent from "./Components/Pages/PostEvent";
 import PostPost from "./Components/Pages/PostPost";
+import { useDispatch } from "react-redux";
+import AuthWrapper from "./Components/Pages/AuthWrapper";
 
 function App() {
+  
   return (
-
+<Router>
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/notification" element={<NotificationSm />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/postevent" element={<PostEvent />} />
-        <Route path="/profileuser" element={<ProfileUser />} />
-        <Route path="/profileevent" element={<ProfileEvent />} />
-        <Route path="/message" element={<Message />} />
-        <Route path="/messagesm" element={<MessageSm />} />
-        <Route path="/max" element={<PostMax />} />
-         <Route path="/chat" element={<Chat />} />
-    <Route path="/profileupdate" element={<ProfileUpdate />} />
-       <Route path="/post" element={<PostPost />} />
-      
+
+        {/* Rutas protegidas: solo si token es válido */}
+        <Route element={<AuthWrapper />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/notification" element={<NotificationSm />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/postevent" element={<PostEvent />} />
+          <Route path="/profileuser" element={<ProfileUser />} />
+          <Route path="/profileevent" element={<ProfileEvent />} />
+          <Route path="/message" element={<Message />} />
+          <Route path="/messagesm" element={<MessageSm />} />
+          <Route path="/max" element={<PostMax />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/profileupdate" element={<ProfileUpdate />} />
+          <Route path="/post" element={<PostPost />} />
+        </Route>
       </Routes>
+    </Router>
+
+
+      
+  
+   
   
   );
 }
