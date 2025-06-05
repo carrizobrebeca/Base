@@ -28,14 +28,14 @@ export default function NotificationSm() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("Respuesta API requests:", res.data);
-      console.log("Usuario actual:", user);
+      // console.log("Respuesta API requests:", res.data);
+      // console.log("Usuario actual:", user);
 
       const onlyRequestsToMe = res.data.filter(
         (r) => r.targetId === user.id
       );
 
-      console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
+      // console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
 
       setRequests(onlyRequestsToMe);
 
@@ -150,7 +150,7 @@ export default function NotificationSm() {
 
                 {requests.length > 0 ? (
                   requests.map((req) => {
-                    console.log("REQ ID:", req.id, "id:", req.requester?.id);
+                    // console.log("REQ ID:", req.id, "id:", req.requester?.id);
                     return (
                       <div key={req.id} className="w-full pt-7 pb-7">
                         <div className="flex justify-between items-center">

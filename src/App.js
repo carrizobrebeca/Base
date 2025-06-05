@@ -21,6 +21,7 @@ import PostEvent from "./Components/Pages/PostEvent";
 import PostPost from "./Components/Pages/PostPost";
 import { useDispatch } from "react-redux";
 import AuthWrapper from "./Components/Pages/AuthWrapper";
+import Follow from "./Components/Pages/Follow";
 
 function App() {
   
@@ -37,6 +38,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/search" element={<Search />} />
+             <Route path="/follow" element={<Follow />} />
           <Route path="/notification" element={<NotificationSm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/postevent" element={<PostEvent />} />

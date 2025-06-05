@@ -1,6 +1,48 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const NavSm = () => {
+  const user = useSelector((state) => state.login.user);
+  const token = useSelector((state) => state.login.token);
+  const [requests, setRequests] = useState([]);
+    const [error, setError] = useState(null);
+  
+  
+    const fetchRequests = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/requests", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        console.log("Respuesta API requests:", res.data);
+        console.log("Usuario actual:", user);
+  
+        const onlyRequestsToMe = res.data.filter(
+          (r) => r.targetId === user.id
+        );
+  const pending = onlyRequestsToMe.filter(
+          (r) => r.status === 'pending'
+        );
+  
+        console.log("Solicitudes pendientes para mí:", pending);
+  
+        setRequests(pending);
+  
+      } catch (err) {
+        // console.error(err);
+        setError(err.message);
+         console.log(error);
+          
+      }
+    };
+  
+    useEffect(() => {
+      fetchRequests();
+    }, [token]);
+  
+  
 const navigate = useNavigate()
   return (
     <div>
@@ -24,9 +66,12 @@ const navigate = useNavigate()
                 </svg>
 
               </h2>
-              <div class="absolute -bottom-5 -left-5 size-10 text-white">
-                <h3 className="bg-red-400 rounded-full">9+</h3>
+              {requests.length > 0 && (
+              <div class="absolute -bottom-2 -left-2 size-10 text-white">
+                <h3 className=" text-red-400 text-2xl">●</h3>
               </div>
+                  )}
+                  
             </div>
             <div class="relative size-16 text-gray-600 flex items-center ">
               <h2 className=" ">
