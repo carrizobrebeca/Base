@@ -18,29 +18,32 @@ export default function NotificationSm() {
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.login.user);
   const token = useSelector((state) => state.login.token);
-const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState([]);
 
 
 
-const fetchRequests = async () => {
-  try {
-    const res = await axios.get("http://localhost:3001/requests", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+  const fetchRequests = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/requests", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    // Solo solicitudes que te mandaron a vos
-    const onlyRequestsToMe = res.data.filter(
-      (r) => r.targetId === user.id
-    );
+      console.log("Respuesta API requests:", res.data);
+      console.log("Usuario actual:", user);
 
-    setRequests(onlyRequestsToMe);
-console.log(onlyRequestsToMe);
+      const onlyRequestsToMe = res.data.filter(
+        (r) => r.targetId === user.id
+      );
 
-  } catch (err) {
-    console.error(err);
-    setError(err.message);
-  }
-};
+      console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
+
+      setRequests(onlyRequestsToMe);
+
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
     fetchRequests();
@@ -49,28 +52,32 @@ console.log(onlyRequestsToMe);
 
 
 
-const handleAccept = async (requestId) => {
-  try {
-    
-    await axios.put(`http://localhost:3001/accept/${requestId}`, null, {
+  const handleAccept = async (requesterId,
+      targetId) => {
+    try {
+    await axios.put('http://localhost:3001/accept', {
+      requesterId,
+      targetId
+    }, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    fetchRequests(); // vuelve a traer los requests
-  } catch (error) {
-    console.error(error);
-  }
-};
 
-const handleReject = async (requestId) => {
-  try {
-    await axios.put(`http://localhost:3001/reject/${requestId}`, null, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    fetchRequests(); // vuelve a traer los requests
+    fetchRequests(); // Actualizá la lista
   } catch (error) {
-    console.error(error);
+    console.error("❌ Error al aceptar solicitud:", error);
   }
-};
+  };
+
+  const handleReject = async (requestId) => {
+    try {
+      await axios.put(`http://localhost:3001/reject/${requestId}`, null, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      fetchRequests(); // vuelve a traer los requests
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   useEffect(() => {
@@ -106,6 +113,7 @@ const handleReject = async (requestId) => {
   };
 
   return (
+
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">
 
       <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col p-4 border-r z-10">
@@ -139,63 +147,66 @@ const handleReject = async (requestId) => {
           <div className="h-[200vh] bg-white">
             <>
               <div className="w-full flex-1 overflow-y-auto pr-2 hide-scrollbar">
-                
-              {requests.length > 0 ? (
-  requests.map((req) => {
-    console.log("REQ:", req); 
-    return (
-    <div key={req.id} className="w-full pt-7 pb-7">
-      <div className="flex justify-between items-center">
-        <img
-          src={req.requester.image}
-          className="w-20 h-20 object-cover rounded-full"
-        />
-        <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
-          <h2 className="whitespace-nowrap">
-            <span className="font-bold truncate">{req.requester.name}</span>
-          </h2>
 
-          {req.status === "pending" && (
-            <span className="text-[1rem] text-gray-600 truncate">quiere seguirte</span>
-          )}
+                {requests.length > 0 ? (
+                  requests.map((req) => {
+                    console.log("REQ ID:", req.id, "id:", req.requester?.id);
+                    return (
+                      <div key={req.id} className="w-full pt-7 pb-7">
+                        <div className="flex justify-between items-center">
+                          <img
+                            src={req.requester.image}
+                            className="w-20 h-20 object-cover rounded-full"
+                          />
+                          <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                            <h2 className="whitespace-nowrap">
+                              <span className="font-bold truncate">{req.requester.name}</span>
+                            </h2>
 
-          {req.status === "accepted" && (
-            <span className="text-[1rem] text-gray-600 truncate">comenzó a seguirte</span>
-          )}
+                            {req.status === "pending" && (
 
-          {req.status === "rejected" && (
-            <span className="text-[1rem] text-gray-400 truncate">solicitud rechazada</span>
-          )}
-        </div>
+                              <span className="text-[1rem] text-gray-600 truncate">quiere seguirte</span>
+                            )}
 
-       {req.status === "pending" && (
-  <div className="flex gap-2">
-    <button
-      onClick={() => handleAccept(req.id)} // 🔧 Arreglado
-      className="rounded-xl bg-gray-200 px-3 py-2"
-    >
-      Aceptar
-    </button>
-    <button
-      onClick={() => handleReject(req.id)} // 🔧 Arreglado
-      className="rounded-xl bg-red-300 px-3 py-2"
-    >
-      Rechazar
-    </button>
-  </div>
-)}
+                            {req.status === "accepted" && (
+                              <span className="text-[1rem] text-gray-600 truncate">comenzó a seguirte</span>
+                            )}
 
-        {req.status === "accepted" && (
-          <button className="rounded-xl bg-red-300 p-2">Follow</button>
-        )}
-      </div>
-    </div>
-  );
-  })
-) : (
-  <p className="text-sm text-gray-500">No tenés solicitudes.</p>
-)}
-<div className="w-full pt-7 pb-7">
+                            {req.status === "rejected" && (
+                              <span className="text-[1rem] text-gray-400 truncate">solicitud rechazada</span>
+                            )}
+                          </div>
+
+                          {req.status === "pending" && (
+
+                            <div className="flex gap-2">
+
+                              <button
+                                onClick={() => handleAccept(req.requesterId, req.targetId)} // 🔧 Arreglado
+                                className="rounded-xl bg-gray-200 px-3 py-2"
+                              >
+                                Aceptar
+                              </button>
+                              <button
+                                onClick={() => handleReject(req.id)} // 🔧 Arreglado
+                                className="rounded-xl bg-red-300 px-3 py-2"
+                              >
+                                Rechazar
+                              </button>
+                            </div>
+                          )}
+
+                          {req.status === "accepted" && (
+                            <button className="rounded-xl bg-red-300 p-2">Follow</button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-sm text-gray-500">No tenés solicitudes.</p>
+                )}
+                <div className="w-full pt-7 pb-7">
                   <div className="flex justify-between  flex items-center">
                     <img
                       src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
@@ -262,7 +273,7 @@ const handleReject = async (requestId) => {
 
                 <h2 className="text-gray-600 font-semibold">Esta semana </h2>
 
-                
+
                 <h2 className="text-gray-600 font-semibold">Este Mes </h2>
 
                 <div className="w-full pt-7 pb-7">
