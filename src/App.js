@@ -44,10 +44,10 @@ function App() {
           <Route path="/postevent" element={<PostEvent />} />
           <Route path="/profileuser" element={<ProfileUser />} />
           <Route path="/profileevent" element={<ProfileEvent />} />
-          <Route path="/message" element={<Message />} />
+          <Route path="/chat/:id" element={<Message />} />
           <Route path="/messagesm" element={<MessageSm />} />
           <Route path="/max" element={<PostMax />} />
-          <Route path="/chat" element={<Chat />} />
+          {/* <Route path="/chat" element={<Chat />} /> */}
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/post" element={<PostPost />} />
         </Route>

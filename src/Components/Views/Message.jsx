@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarLeft from "../Pages/SidebarLeft";
 import { useNavigate } from "react-router-dom";
 import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
@@ -6,8 +6,10 @@ import galery from "../../assets/galery_icon.png";
 import send from "../../assets/send_icon.png";
 import sendimg from "../../assets/sendmsg.PNG";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function Message() {
+  const { id: chatId } = useParams(); 
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +24,10 @@ export default function Message() {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
+    useEffect(() => {
+    // Acá podrías hacer un fetch del chat usando chatId
+    console.log("ID del chat:", chatId);
+  }, [chatId]);
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">
@@ -64,7 +70,7 @@ export default function Message() {
             </button>
 
             <img
-              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+              src={user.image}
               className="w-10 h-10 lg:w-20 lg:h-20  object-cover rounded-full"
             />
 

@@ -11,8 +11,8 @@ import axios from "axios";
 export default function Follow() {
 
   const [activePanel, setActivePanel] = useState(null);
-  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-
+    const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
+// {activeTab === "following" && <FollowingList />}
   const [searchValue, setSearchValue] = useState("");
   const [nameUser, setNameUsers] = useState([]);
   const [loading, setLoading] = useState(false);

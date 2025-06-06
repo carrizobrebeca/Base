@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const HeaderProfile = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.login.user);
-
+ const [activePanel, setActivePanel] = useState(null);
+//  hadle que cuando haga clic le mande followers o followed para 
   return (
     <div>
       <header className="bg-white p-4">

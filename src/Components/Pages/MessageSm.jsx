@@ -15,30 +15,45 @@ export default function MessageSm() {
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
-  const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const user = useSelector((state) => state.login.user);
+ const user = useSelector((state) => state.login.user);
+  const token = useSelector((state) => state.login.token);
+  const [requests, setRequests] = useState([]);
+ const [followed, setFollowed] = useState([]);
 
+
+  const fetchRequests = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/requests", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // console.log("Respuesta API requests:", res.data);
+      console.log("Usuario actual:", user);
+// console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
+      const onlyRequestsToMe = res.data.filter(
+        (r) => r.targetId === user.id
+      );
+        setRequests(onlyRequestsToMe);
+
+       const followedToMe = onlyRequestsToMe.filter(
+        (r) => r.status === 'accepted'
+      );
+      setFollowed(followedToMe)
+console.log("Solicitudes seguidores  para mí:", followedToMe);
+      
+
+
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await axios.get(`http://localhost:3001/users`);
-        const users = response.data;
-        setAllUsers(users);
-
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+    fetchRequests();
+  }, [token]);
 
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
@@ -49,6 +64,15 @@ export default function MessageSm() {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
+
+  const handleOpenChat = async (otherUserId) => {
+    const user1Id = user.id
+  
+    
+  const res = await axios.post("http://localhost:3001/chat", { user1Id, user2Id: otherUserId });
+  const chat = res.data;
+  navigate(`/chat/${chat.id}`);
+};
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">
@@ -69,7 +93,7 @@ export default function MessageSm() {
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
             <div className="bg-white text-gray-600 w-full flex justify-between">
               <div className="mt-2 ml-4 mb-2 mr-4 bg-white flex w-full items-center">
-                <svg onClick={() => navigate("/home")} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <svg onClick={() => navigate("/home")} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer size-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
                 <h2 className="text-text text-xl font-bold pl-4">Mensajes</h2>
@@ -84,19 +108,36 @@ export default function MessageSm() {
           <div className="h-[200vh] bg-white">
             <>
               <div className="ls-list hide-scrollbar">
-                {allUsers.map((user) => (
-                  <div key={user.id} onClick={() => navigate("/message", { state: { selectedUser: user } })} className="friends">
-                    <img src={user.image} alt="profileimage" />
-                    <div>
-                      <p>{user.name}</p>
-                      <span>{user.userName}</span>
+                  {followed.length > 0 ? (
+                  followed.map((req) => {
+                 const otherUserId = req.requester.id;
+          
+                 console.log("idAlque va",otherUserId);
+                    return (       
+                      
+                      <div key={otherUserId}
+          onClick={() => handleOpenChat(otherUserId)}  className="w-full pt-7 pb-7">
+                        <div className="flex cursor-pointer justify-between items-center">
+                          <img
+                            src={req.requester.image}
+                            className="w-20 h-20 object-cover rounded-full"
+                          />
+                          <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                            <h2 className="whitespace-nowrap">
+                              <span className="font-bold truncate">{req.requester.name}</span>
+                            </h2>
 
-                    </div>
-{/* 
-                    
-                    <h2 className="text-green-600 text-4xl">•</h2> */}
-                  </div>
-                ))}
+                          
+                          </div>
+
+                         
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-sm text-gray-500">No tenés solicitudes.</p>
+                )}
               </div>
             </>
           </div>

@@ -19,7 +19,7 @@ export default function NotificationSm() {
   const user = useSelector((state) => state.login.user);
   const token = useSelector((state) => state.login.token);
   const [requests, setRequests] = useState([]);
-
+ const [followed, setFollowed] = useState([]);
 
 
   const fetchRequests = async () => {
@@ -29,15 +29,19 @@ export default function NotificationSm() {
       });
 
       // console.log("Respuesta API requests:", res.data);
-      // console.log("Usuario actual:", user);
-
+      console.log("Usuario actual:", user);
+// console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
       const onlyRequestsToMe = res.data.filter(
         (r) => r.targetId === user.id
       );
+        setRequests(onlyRequestsToMe);
 
-      // console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
+       const followedToMe = onlyRequestsToMe.filter(
+        (r) => r.status === 'accepted'
+      );
+console.log("Solicitudes seguidores  para mí:", followedToMe);
+      
 
-      setRequests(onlyRequestsToMe);
 
     } catch (err) {
       console.error(err);
@@ -150,7 +154,8 @@ export default function NotificationSm() {
 
                 {requests.length > 0 ? (
                   requests.map((req) => {
-                    // console.log("REQ ID:", req.id, "id:", req.requester?.id);
+                      console.log("REQ :", req);
+                    console.log("REQ ID:", req.requesterId, "id:", req.requester?.id);
                     return (
                       <div key={req.id} className="w-full pt-7 pb-7">
                         <div className="flex justify-between items-center">
