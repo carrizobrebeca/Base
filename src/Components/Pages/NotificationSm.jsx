@@ -19,7 +19,7 @@ export default function NotificationSm() {
   const user = useSelector((state) => state.login.user);
   const token = useSelector((state) => state.login.token);
   const [requests, setRequests] = useState([]);
-
+  const [followed, setFollowed] = useState([]);
 
 
   const fetchRequests = async () => {
@@ -38,6 +38,10 @@ export default function NotificationSm() {
       // console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
 
       setRequests(onlyRequestsToMe);
+        const follow = onlyRequestsToMe.filter((f) => f.targetId === user.id)
+      console.log("futuros:", follow);
+      const followto = follow.filter((f) => f.status === 'accepted')
+      setFollowed(followto)
 
     } catch (err) {
       console.error(err);
@@ -48,8 +52,6 @@ export default function NotificationSm() {
   useEffect(() => {
     fetchRequests();
   }, [token]);
-
-
 
 
   const handleAccept = async (requesterId,
@@ -205,6 +207,58 @@ export default function NotificationSm() {
                   })
                 ) : (
                   <p className="text-sm text-gray-500">No tenés solicitudes.</p>
+                )}
+                {followed.length > 0 ? (
+                  followed.map((req) => {
+                    // console.log("REQ ID:", req.id, "id:", req.requester?.id);
+                    return (
+                      <div key={req.id} className="w-full pt-7 pb-7">
+                        <div className="flex justify-between items-center">
+                          <img
+                            src={req.requester.image}
+                            className="w-20 h-20 object-cover rounded-full"
+                          />
+                          <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                            <h2 className="whitespace-nowrap">
+                              <span className="font-bold truncate">{req.requester.name}</span>
+                            </h2>
+
+                          
+
+                            {req.status === "accepted" && (
+                              <span className="text-[1rem] text-gray-600 truncate">aceptó tu solicitud</span>
+                            )}
+
+                          </div>
+
+                          {req.status === "pending" && (
+
+                            <div className="flex gap-2">
+
+                              <button
+                                onClick={() => handleAccept(req.requesterId, req.targetId)} // 🔧 Arreglado
+                                className="rounded-xl bg-gray-200 px-3 py-2"
+                              >
+                                Aceptar
+                              </button>
+                              <button
+                                onClick={() => handleReject(req.id)} // 🔧 Arreglado
+                                className="rounded-xl bg-red-300 px-3 py-2"
+                              >
+                                Rechazar
+                              </button>
+                            </div>
+                          )}
+
+                          {req.status === "accepted" && (
+                            <button className="rounded-xl bg-red-300 p-2">Mensaje</button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-sm text-gray-500">No tenés aceptaron</p>
                 )}
                 <div className="w-full pt-7 pb-7">
                   <div className="flex justify-between  flex items-center">

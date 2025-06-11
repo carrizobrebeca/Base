@@ -11,6 +11,7 @@ import NavSmFooter from "../Pages/NavSmFooter";
 import NavSm from "../Pages/NavSm";
 import Post from "../Pages/Post";
 import { useSelector } from "react-redux";
+import Event from "../Pages/Event";
 
 export default function Home() {
 
@@ -97,7 +98,14 @@ export default function Home() {
         {/* MAIN SCROLLABLE CONTENT */}
         <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-gray-100 w-full hide-scrollbar">
           <div className="h-[200vh] bg-gray-100">
-            <Post />
+            <div className="pb-4">
+               <Post />
+            </div>
+           
+            <div className="pb-4">
+             <Event />   
+            </div>
+          
           </div>
         </main>
         <header className="bg-gray-100 text-white lg:shadow-md sticky top-0 z-20">

@@ -24,9 +24,9 @@ import AuthWrapper from "./Components/Pages/AuthWrapper";
 import Follow from "./Components/Pages/Follow";
 
 function App() {
-  
+
   return (
-<Router>
+    <Router>
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Landing />} />
@@ -38,16 +38,16 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/search" element={<Search />} />
-             <Route path="/follow" element={<Follow />} />
+          <Route path="/follow" element={<Follow />} />
           <Route path="/notification" element={<NotificationSm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/postevent" element={<PostEvent />} />
           <Route path="/profileuser" element={<ProfileUser />} />
           <Route path="/profileevent" element={<ProfileEvent />} />
-          <Route path="/message" element={<Message />} />
+          <Route path="/chat/:id" element={<Message />} />
           <Route path="/messagesm" element={<MessageSm />} />
           <Route path="/max" element={<PostMax />} />
-          <Route path="/chat" element={<Chat />} />
+          {/* <Route path="/chat" element={<Chat />} /> */}
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/post" element={<PostPost />} />
         </Route>
@@ -55,10 +55,10 @@ function App() {
     </Router>
 
 
-      
-  
-   
-  
+
+
+
+
   );
 }
 

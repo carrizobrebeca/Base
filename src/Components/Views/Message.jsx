@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarLeft from "../Pages/SidebarLeft";
 import { useNavigate } from "react-router-dom";
 import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
@@ -6,13 +6,17 @@ import galery from "../../assets/galery_icon.png";
 import send from "../../assets/send_icon.png";
 import sendimg from "../../assets/sendmsg.PNG";
 import { useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 export default function Message() {
+
+  const { id: chatId } = useParams();
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((state) => state.login.user);
-
+  const token = useSelector((state) => state.login.token);
+  const [messages, setMessages] = useState([]);
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
     setIsSidebarMinimized(true);
@@ -22,6 +26,25 @@ export default function Message() {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
+
+  useEffect(() => {
+    // Acá podrías hacer un fetch del chat usando chatId
+    console.log("ID del chat:", chatId);
+  }, [chatId]);
+
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3001/message/${chatId}`);
+        setMessages(res.data); // Guardás todos los mensajes en el estado
+      } catch (err) {
+        console.error("Error al cargar mensajes", err);
+      }
+    };
+
+    fetchMessages();
+  }, [chatId]);
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">
@@ -63,9 +86,8 @@ export default function Message() {
               </svg>
             </button>
 
-            <img
-              src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
-              className="w-10 h-10 lg:w-20 lg:h-20  object-cover rounded-full"
+            <img className="rounded-full h-[50px] w-[50px]"
+              src={user.image}
             />
 
             <div onClick={() => navigate("/profileuser")} className="flex flex-col ">
@@ -80,78 +102,34 @@ export default function Message() {
           <div className="h-[200vh] bg-gray-100">
 
             <div className='chat-box'>
-              {/* <div className='chat-user'>
-                <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                <p>Nombre <h3 >●</h3></p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                </svg>
-              </div> */}
+
 
               <div className="chat-msg hide-scrollbar">
-                <div className="s-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
-                <div className="r-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
-                <div className="r-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
-                <div className="r-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>  <div className="r-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
-                <div className="s-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
-                <div className="s-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
+                <div className="chat-msg hide-scrollbar">
+                  {messages.map((msg) => {
+                    const isMyMessage = msg.senderId === user.id;
+                    const time = new Date(msg.createdAt).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    });
 
-                <div className="s-msg">
-                  <img className='msg-img' src={sendimg} alt="" />
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
-                </div>
-
-                <div className="r-msg">
-                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
-                  <div>
-                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
-                    <p>2:30 PM</p>
-                  </div>
+                    return (
+                      <div key={msg.id} className={isMyMessage ? "s-msg" : "r-msg"}>
+                        {msg.content.includes("http") ? (
+                          <img className="msg-img" src={msg.content} alt="sent content" />
+                        ) : (
+                          <p className="msg">{msg.content}</p>
+                        )}
+                        <div>
+                          <img
+                           src={msg.User?.image || "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"}
+                            alt="profile"
+                          />
+                          <p>{time}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
               </div>

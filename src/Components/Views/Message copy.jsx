@@ -1,24 +1,51 @@
-import { useState } from "react";
-import Header from "../Pages/Header";
-import Nav from "../Pages/Nav";
+import { useEffect, useState } from "react";
 import SidebarLeft from "../Pages/SidebarLeft";
-import SidebarRight from "../Pages/SidebarRight";
 import { useNavigate } from "react-router-dom";
-import ContactMessage from "../Pages/ContactMessage";
-
+import SidebarLeftMessage from "../Pages/SidebarLeftMessage";
+import galery from "../../assets/galery_icon.png";
+import send from "../../assets/send_icon.png";
+import sendimg from "../../assets/sendmsg.PNG";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 export default function Message() {
+
+   const { id: chatId } = useParams(); 
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.login.user);
+  const token = useSelector((state) => state.login.token);
+  const [messages, setMessages] = useState([]);
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
     setIsSidebarMinimized(true);
   };
+    
+  
 
   const handleResetSidebar = () => {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
+
+   useEffect(() => {
+    // Acá podrías hacer un fetch del chat usando chatId
+    console.log("ID del chat:", chatId);
+  }, [chatId]);
+
+
+  useEffect(() => {
+  const fetchMessages = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3001/messages/${chatId}`);
+      setMessages(res.data); // Guardás todos los mensajes en el estado
+    } catch (err) {
+      console.error("Error al cargar mensajes", err);
+    }
+  };
+
+  fetchMessages();
+}, [chatId]);
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">
@@ -36,7 +63,7 @@ export default function Message() {
 
       {/* RIGHT SIDEBAR PEGADO AL LEFT */}
       <aside className="hidden lg:flex fixed left-64 top-0 h-screen w-64 flex-col bg-gray-100 p-4 border-r z-10">
-        <ContactMessage />
+        <SidebarLeftMessage />
       </aside>
 
       {/* MAIN AREA */}
@@ -65,16 +92,100 @@ export default function Message() {
               className="w-10 h-10 lg:w-20 lg:h-20  object-cover rounded-full"
             />
 
-            <div className="flex flex-col ">
-              <h2 className="text-sm lg:text-xl">Nombre</h2>
-              <h3 className="text-sm lg:text-sm">Usuario</h3>
+            <div onClick={() => navigate("/profileuser")} className="flex flex-col ">
+              <h2 className="text-sm lg:text-xl">{user.name} </h2>
+              <h3 className="text-sm lg:text-sm">{user.userName} </h3>
             </div>
           </div>
         </header>
 
         {/* MAIN SCROLLABLE CONTENT */}
         <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-gray-100 w-full hide-scrollbar">
-          <div className="h-[200vh] bg-gray-100">Contenido de prueba largo</div>
+          <div className="h-[200vh] bg-gray-100">
+
+            <div className='chat-box'>
+           
+
+              <div className="chat-msg hide-scrollbar">
+                <div className="s-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+                <div className="r-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+                <div className="r-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+                <div className="r-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>  <div className="r-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+                <div className="s-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+                <div className="s-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+
+                <div className="s-msg">
+                  <img className='msg-img' src={sendimg} alt="" />
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+
+                <div className="r-msg">
+                  <p className="msg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. .</p>
+                  <div>
+                    <img src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png" alt="profileimage" />
+                    <p>2:30 PM</p>
+                  </div>
+                </div>
+
+              </div>
+
+
+              {/* <div className="chat-input">
+                <input type="text" placeholder='Enviar un mensaje' />
+                <input type="file" id="image" accept='image/png, image/jpeg' hidden />
+                <label htmlFor="image">
+                    <img src={galery} alt="" />
+                </label>
+                <img src={send} alt="" />
+            </div> */}
+            </div>
+
+          </div>
         </main>
         <footer className="w-full flex justify-between items-center p-4 border-2 rounded-full">
           <button className="text-xl text-text">
@@ -98,6 +209,10 @@ export default function Message() {
             placeholder="Enviar mensaje..."
             className="text-base lg:text-xl text-text w-full pl-2 ml-4 mr-4 rounded-full"
           />
+          <input type="file" id="image" accept='image/png, image/jpeg' hidden />
+          <label htmlFor="image">
+            <img className="h-[35px]" src={galery} alt="" />
+          </label>
           <button className="text-xl text-text">
             <svg
               xmlns="http://www.w3.org/2000/svg"

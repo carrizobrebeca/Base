@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+// activeTab={activeTab} setActiveTab={setActiveTab}
 const HeaderProfile = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.login.user);
-
+ 
   return (
     <div>
       <header className="bg-white p-4">
@@ -57,7 +57,7 @@ const HeaderProfile = () => {
       <header className="bg-white p-4">
         <div className="text-sm font-semibold">
           <div className="grid grid-cols-2 gap-2 justify-items-center">
-            <div className="text-gray-600 flex items-center cursor-pointer"  onClick={() => navigate("/follow")}>
+            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow", { state: { tab: "followers" } })} >
               <h2 className="whitespace-nowrap">
                 <span
                   className="font-bold"
@@ -69,7 +69,7 @@ const HeaderProfile = () => {
               </h2>
             </div>
 
-            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow")}>
+            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow", { state: { tab: "followed" } })}>
               <h2 className="whitespace-nowrap">
                 <span
                   className="font-bold"
