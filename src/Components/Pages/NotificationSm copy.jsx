@@ -29,33 +29,19 @@ export default function NotificationSm() {
       });
 
       // console.log("Respuesta API requests:", res.data);
-      console.log("Usuario actual:", user);
+      // console.log("Usuario actual:", user);
 
       const onlyRequestsToMe = res.data.filter(
         (r) => r.targetId === user.id
       );
 
-      console.log("Comenzo a seguirme:", onlyRequestsToMe);
+      // console.log("Solicitudes filtradas para mí:", onlyRequestsToMe);
 
       setRequests(onlyRequestsToMe);
-      const follow = res.data.filter(
-        (r) => r.requesterId === user.id
-      );
-      const acceptedFollowed = follow.filter(
-        (r) => r.status === 'accepted'
-      );
-      //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
-      console.log("seguidos:", acceptedFollowed);
-
-
-      const response = await axios.get("http://localhost:3001/users");
-      const users = response.data;
-
-      // Trae todos los usuarios que coinciden con los targetId de relaciones aceptadas
-      const seguidos = acceptedFollowed.map((relacion) =>
-        users.find((user) => user.id === relacion.targetId)
-      ) // Filtra por si alguno no se encuentra
-      setFollowed(seguidos)
+        const follow = onlyRequestsToMe.filter((f) => f.targetId === user.id)
+      console.log("futuros:", follow);
+      const followto = follow.filter((f) => f.status === 'accepted')
+      setFollowed(followto)
 
     } catch (err) {
       console.error(err);
@@ -69,19 +55,19 @@ export default function NotificationSm() {
 
 
   const handleAccept = async (requesterId,
-    targetId) => {
+      targetId) => {
     try {
-      await axios.put('http://localhost:3001/accept', {
-        requesterId,
-        targetId
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+    await axios.put('http://localhost:3001/accept', {
+      requesterId,
+      targetId
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-      fetchRequests(); // Actualizá la lista
-    } catch (error) {
-      console.error("❌ Error al aceptar solicitud:", error);
-    }
+    fetchRequests(); // Actualizá la lista
+  } catch (error) {
+    console.error("❌ Error al aceptar solicitud:", error);
+  }
   };
 
   const handleReject = async (requestId) => {
@@ -180,14 +166,14 @@ export default function NotificationSm() {
                             </h2>
 
                             {req.status === "pending" && (
-                              //bien
+//bien
                               <span className="text-[1rem] text-gray-600 truncate">quiere seguirte</span>
                             )}
 
                             {req.status === "accepted" && (
                               <span className="text-[1rem] text-gray-600 truncate">comenzó a seguirte</span>
                             )}
-                            {/* 
+{/* 
                             {req.status === "rejected" && (
                               <span className="text-[1rem] text-gray-400 truncate">solicitud rechazada</span>
                             )} */}
@@ -196,25 +182,25 @@ export default function NotificationSm() {
                           {req.status === "pending" && (
 
                             <div className="flex gap-2">
-  <button
-                                onClick={() => handleReject(req.id)} // 🔧 Arreglado
-                                className="rounded-xl bg-gray-200 px-3 py-2"
-                              >
-                                Rechazar
-                              </button>
+
                               <button
                                 onClick={() => handleAccept(req.requesterId, req.targetId)} // 🔧 Arreglado
-                                className="rounded-xl bg-red-300 px-3 py-2"
+                                className="rounded-xl bg-gray-200 px-3 py-2"
                               >
                                 Aceptar
                               </button>
-                            
+                              <button
+                                onClick={() => handleReject(req.id)} // 🔧 Arreglado
+                                className="rounded-xl bg-red-300 px-3 py-2"
+                              >
+                                Rechazar
+                              </button>
                             </div>
                           )}
 
                           {req.status === "accepted" && (
                             //aun no hace nada
-                            <button className="rounded-xl bg-red-300 p-2">Perfil</button>
+                            <button className="rounded-xl bg-red-300 p-2">Follow</button>
                           )}
                         </div>
                       </div>
@@ -225,58 +211,56 @@ export default function NotificationSm() {
                 )}
                 {followed.length > 0 ? (
                   followed.map((req) => {
-                    console.log(followed);
-
+                    // console.log("REQ ID:", req.id, "id:", req.requester?.id);
                     return (
                       <div key={req.id} className="w-full pt-7 pb-7">
                         <div className="flex justify-between items-center">
                           <img
-                            src={req.image}
+                            src={req.requester.image}
                             className="w-20 h-20 object-cover rounded-full"
                           />
                           <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
                             <h2 className="whitespace-nowrap">
-                              <span className="font-bold truncate">{req.name}</span>
+                              <span className="font-bold truncate">{req.requester.name}</span>
                             </h2>
 
-
-
-
-                            <span className="text-[1rem] text-gray-600 truncate">aceptó tu solicitud</span>
+                          
+{/* el que comenzo a seguirme yo acepte su solicitud
+                            {req.status === "accepted" && (
+                              <span className="text-[1rem] text-gray-600 truncate">aceptó tu solicitud</span>
+                            )} */}
 
                           </div>
 
-                          {/* {req.status === "pending" && (
+                          {req.status === "pending" && (
 
                             <div className="flex gap-2">
 
-
                               <button
-                                onClick={() => handleReject(req.id)}
+                                onClick={() => handleAccept(req.requesterId, req.targetId)} // 🔧 Arreglado
                                 className="rounded-xl bg-gray-200 px-3 py-2"
-                              >
-                                Rechazar
-                              </button>
-                              
-                              <button
-                                onClick={() => handleAccept(req.requesterId, req.targetId)}
-                                className="rounded-xl bg-red-300 px-3 py-2"
                               >
                                 Aceptar
                               </button>
+                              <button
+                                onClick={() => handleReject(req.id)} // 🔧 Arreglado
+                                className="rounded-xl bg-red-300 px-3 py-2"
+                              >
+                                Rechazar
+                              </button>
                             </div>
-                          )} */}
+                          )}
 
-
-
-                          <button className="rounded-xl bg-red-300 p-2">Mensaje</button>
-
+                          {req.status === "accepted" && (
+                            //aun no hace nada
+                            <button className="rounded-xl bg-red-300 p-2">Mensaje</button>
+                          )}
                         </div>
                       </div>
                     );
                   })
                 ) : (
-
+                  //ver notif
                   <p className="text-sm text-gray-500"></p>
                 )}
                 <div className="w-full pt-7 pb-7">
@@ -295,6 +279,37 @@ export default function NotificationSm() {
                   </div>
                 </div>
 
+                <div className="w-full pt-7 pb-7">
+                  <div className="flex justify-between  flex items-center">
+                    <img
+                      src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                      className="w-20 h-20 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                      <h2 className="whitespace-nowrap">A&nbsp;
+                        <span className="font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                      </h2>
+                      <span className="text-[1rem] text-gray-600 truncate">le gustò tu publicaciòn</span>
+                    </div>
+                    <img className="size-20 rounded-xl" src={post} alt="post" />
+                  </div>
+                </div>
+
+                <div className="w-full pt-7 pb-7">
+                  <div className="flex justify-between  flex items-center">
+                    <img
+                      src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                      className="w-20 h-20 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                      <h2 className="whitespace-nowrap">
+                        <span className="font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                      </h2>
+                      <span className="text-[1rem] text-gray-600 truncate">Comenzó a seguirte</span>
+                    </div>
+                    <button className="rounded-xl bg-red-300 p-2">Follow</button>
+                  </div>
+                </div>
 
                 <div className="w-full pt-7 pb-7">
                   <div className="flex justify-between  flex items-center">
@@ -306,7 +321,7 @@ export default function NotificationSm() {
                       <h2 className="whitespace-nowrap">A&nbsp;
                         <span className="font-bold truncate">NombreMuyLargoDeEjemplo</span>
                       </h2>
-                      <span className="text-[1rem] text-gray-600 truncate">te invito a un evento</span>
+                      <span className="text-[1rem] text-gray-600 truncate">le gustò tu publicaciòn</span>
                     </div>
                     <img className="size-20 rounded-xl" src={post} alt="post" />
                   </div>
@@ -318,7 +333,21 @@ export default function NotificationSm() {
 
                 <h2 className="text-gray-600 font-semibold">Este Mes </h2>
 
-                
+                <div className="w-full pt-7 pb-7">
+                  <div className="flex justify-between  flex items-center">
+                    <img
+                      src="https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png"
+                      className="w-20 h-20 object-cover rounded-full"
+                    />
+                    <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
+                      <h2 className="whitespace-nowrap">A&nbsp;
+                        <span className="font-bold truncate">NombreMuyLargoDeEjemplo</span>
+                      </h2>
+                      <span className="text-[1rem] text-gray-600 truncate">le gustò tu publicaciòn</span>
+                    </div>
+                    <img className="size-20 rounded-xl" src={post} alt="post" />
+                  </div>
+                </div>
                 <h2 className="text-gray-600 font-semibold">Sugerencias para ti</h2>
                 {recentUsers.length > 0 ? (
                   recentUsers.map((user) => (
@@ -334,7 +363,7 @@ export default function NotificationSm() {
                           </h2>
                           <span className="text-[1rem] text-gray-600 truncate">{user.userName}</span>
                         </div>
-                        <button className="rounded-xl bg-red-300 p-2">Perfil</button>
+                        <button className="rounded-xl bg-red-300 p-2">Follow</button>
                       </div>
                     </div>
                   ))

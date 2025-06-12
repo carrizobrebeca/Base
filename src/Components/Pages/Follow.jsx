@@ -55,8 +55,6 @@ export default function Follow() {
     fetchUsers();
   }, [searchValue]);
 
-
-
   const fetchRequests = async () => {
     try {
       const res = await axios.get("http://localhost:3001/requests", {
@@ -69,17 +67,30 @@ export default function Follow() {
       const onlyRequestsToMe = res.data.filter(
         (r) => r.targetId === user.id
       );
+      const accepted = onlyRequestsToMe.filter(
+        (r) => r.status === 'accepted'
+      );
+      console.log("Solicitudes para miiii:", onlyRequestsToMe);
+      //requesterId del que me manda solicitud mis seguidores
+      setRequests(accepted);
+      const follow = res.data.filter(
+        (r) => r.requesterId === user.id
+      );
+      const acceptedFollowed = follow.filter(
+        (r) => r.status === 'accepted'
+      );
+      //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
+      console.log("seguidos:", acceptedFollowed);
 
-      console.log("Solicitudes miiiiiaaass:", onlyRequestsToMe);
 
-      setRequests(onlyRequestsToMe);
+      const response = await axios.get("http://localhost:3001/users");
+      const users = response.data;
 
-      const follow = onlyRequestsToMe.filter((f) => f.targetId === user.id)
-      console.log("futuros:", follow);
-      const followto = follow.filter((f) => f.status === 'accepted')
-      setFollowed(followto)
-      console.log("siguiendo:", followto);
-
+      // Trae todos los usuarios que coinciden con los targetId de relaciones aceptadas
+      const seguidos = acceptedFollowed.map((relacion) =>
+        users.find((user) => user.id === relacion.targetId)
+      ) // Filtra por si alguno no se encuentra
+      setFollowed(seguidos)
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -89,6 +100,41 @@ export default function Follow() {
   useEffect(() => {
     fetchRequests();
   }, [token]);
+
+
+
+  // const fetchRequests = async () => {
+  //   try {
+  //     const res = await axios.get("http://localhost:3001/requests", {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+
+  //     // console.log("Respuesta API requests:", res.data);
+  //     // console.log("Usuario actual:", user);
+
+  //     const onlyRequestsToMe = res.data.filter(
+  //       (r) => r.targetId === user.id
+  //     );
+
+  //     console.log("Solicitudes miiiiiaaass:", onlyRequestsToMe);
+
+  //     setRequests(onlyRequestsToMe);
+
+  //     const follow = onlyRequestsToMe.filter((f) => f.targetId === user.id)
+  //     console.log("futuros:", follow);
+  //     const followto = follow.filter((f) => f.status === 'accepted')
+  //     setFollowed(followto)
+  //     console.log("siguiendo:", followto);
+
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError(err.message);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchRequests();
+  // }, [token]);
 
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
@@ -199,12 +245,12 @@ export default function Follow() {
                       <div key={req.id} className="w-full pt-7 pb-7">
                         <div className="flex justify-between items-center">
                           <img
-                            src={req.requester.image}
+                            src={req.image}
                             className="w-20 h-20 object-cover rounded-full"
                           />
                           <div className="flex flex-col justify-center px-4 max-w-[12rem] overflow-hidden">
                             <h2 className="whitespace-nowrap">
-                              <span className="font-bold truncate">{req.requester.name}</span>
+                              <span className="font-bold truncate">{req.name}</span>
                             </h2>
                           </div>
                         </div>

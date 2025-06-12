@@ -27,10 +27,8 @@ export default function Profile() {
   const allEvents = useSelector((state) => state.event.allEvent);
   const status = useSelector((state) => state.event.status);
 
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
   const allPosts = useSelector((state) => state.post.allpost);
-  // const [filtered, setFiltered] = useState([]);
+
 
   useEffect(() => {
     if (status === "idle") {
@@ -39,57 +37,18 @@ export default function Profile() {
     }
   }, [dispatch, status]);
 
-  // Asegurate de que user exista antes de filtrar
   const myEvents = user ? allEvents.filter(event => event.creatorId === user.id) : [];
   const myPosts = user ? allPosts.filter(post => post.userId === user.id) : [];
-  // useEffect(() => {
-  //     const fetchPosts = async () => {
-  //       try {
-  //         setLoading(true);
-  //         setError(null);
-  //         const response = await axios.get(`http://localhost:3001/post`);
-  //         const posts = response.data;
-
-  //         const filteredPost = posts.filter((u) =>
-  //           u.userId === user.id
-  //         );
-  //         setFiltered(filteredPost);
-  //         console.log(filteredPost);
-
-  //       }   catch (err) {
-  //         setError(err.message);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchPosts();
-  //   }, []);
-
-
-
-  // useEffect(() => {
-  //   if (status === "idle") {
-  //     dispatch(fetchPost());
-  //   }
-  // }, [dispatch, status]);
-
-
-
-  // const myPost = allPost.filter((post) => post.eventId === event.id);
-
+ 
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
     setIsSidebarMinimized(true);
   };
 
-
-
   const handleResetSidebar = () => {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
-
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-white relative">

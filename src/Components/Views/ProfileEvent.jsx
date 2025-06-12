@@ -32,6 +32,10 @@ export default function ProfileEvent() {
   const allPost = useSelector((state) => state.post.allpost);
   const status = useSelector((state) => state.post.status);
 
+
+
+
+  
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchPost());
@@ -49,7 +53,9 @@ export default function ProfileEvent() {
   for (let i = 0; i < myPost.length; i += 2) {
     groupedPosts.push(myPost.slice(i, i + 2));
   }
- 
+
+
+   
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 relative">
 

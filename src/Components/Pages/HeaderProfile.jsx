@@ -1,10 +1,62 @@
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // activeTab={activeTab} setActiveTab={setActiveTab}
 const HeaderProfile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.login.user);
- 
+  const token = useSelector((state) => state.login.token);
+  const [requests, setRequests] = useState([]);
+  const [followed, setFollowed] = useState([]);
+  const [error, setError] = useState(null);
+  const fetchRequests = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/requests", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // console.log("Respuesta API requests:", res.data);
+      // console.log("Usuario actual:", user);
+
+      const onlyRequestsToMe = res.data.filter(
+        (r) => r.targetId === user.id
+      );
+ const accepted = onlyRequestsToMe.filter(
+          (r) => r.status === 'accepted'
+        );
+      console.log("Solicitudes para miiii:", onlyRequestsToMe);
+//requesterId del que me manda solicitud mis seguidores
+      setRequests(accepted);
+const follow = res.data.filter(
+        (r) => r.requesterId === user.id
+      );
+      const acceptedFollowed = follow.filter(
+          (r) => r.status === 'accepted'
+        );
+        //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
+          console.log("seguidos:", acceptedFollowed);
+           
+          
+    const response = await axios.get("http://localhost:3001/users");
+const users = response.data;
+
+// Trae todos los usuarios que coinciden con los targetId de relaciones aceptadas
+const seguidos = acceptedFollowed.map((relacion) =>
+  users.find((user) => user.id === relacion.targetId)
+) // Filtra por si alguno no se encuentra
+setFollowed(seguidos)
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, [token]);
+
   return (
     <div>
       <header className="bg-white p-4">
@@ -57,25 +109,26 @@ const HeaderProfile = () => {
       <header className="bg-white p-4">
         <div className="text-sm font-semibold">
           <div className="grid grid-cols-2 gap-2 justify-items-center">
-            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow", { state: { tab: "followers" } })} >
+            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow", { state: { tab: "followed" } })} >
               <h2 className="whitespace-nowrap">
                 <span
                   className="font-bold"
-                 
+
                 >
-                  256
+                  {followed.length
+ }
                 </span>
                 &nbsp;seguidos
               </h2>
             </div>
 
-            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow", { state: { tab: "followed" } })}>
+            <div className="text-gray-600 flex items-center cursor-pointer" onClick={() => navigate("/follow", { state: { tab: "followers" } })}>
               <h2 className="whitespace-nowrap">
                 <span
                   className="font-bold"
-                  
+
                 >
-                  256
+                   {requests.length}
                 </span>
                 &nbsp;seguidores
               </h2>

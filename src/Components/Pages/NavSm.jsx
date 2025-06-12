@@ -29,6 +29,15 @@ const NavSm = () => {
         console.log("Solicitudes pendientes para mí:", pending);
   
         setRequests(pending);
+          const follow = res.data.filter(
+        (r) => r.requesterId === user.id
+      );
+      //cuando aceptaron pero ver como desapareceer una vez de hacer clic
+      // const acceptedFollowed = follow.filter(
+      //   (r) => r.status === 'accepted'
+      // );
+      
+      //   setRequests(acceptedFollowed);
   
       } catch (err) {
         // console.error(err);
