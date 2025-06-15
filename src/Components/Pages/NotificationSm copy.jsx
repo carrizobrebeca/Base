@@ -191,7 +191,7 @@ export default function NotificationSm() {
                               </button>
                               <button
                                 onClick={() => handleReject(req.id)} // 🔧 Arreglado
-                                className="rounded-xl bg-red-300 px-3 py-2"
+                                className="rounded-xl bg-red-400 px-3 py-2"
                               >
                                 Rechazar
                               </button>
@@ -200,7 +200,7 @@ export default function NotificationSm() {
 
                           {req.status === "accepted" && (
                             //aun no hace nada
-                            <button className="rounded-xl bg-red-300 p-2">Follow</button>
+                            <button className="rounded-xl bg-red-400 p-2">Follow</button>
                           )}
                         </div>
                       </div>
@@ -244,7 +244,7 @@ export default function NotificationSm() {
                               </button>
                               <button
                                 onClick={() => handleReject(req.id)} // 🔧 Arreglado
-                                className="rounded-xl bg-red-300 px-3 py-2"
+                                className="rounded-xl bg-red-400 px-3 py-2"
                               >
                                 Rechazar
                               </button>
@@ -253,7 +253,7 @@ export default function NotificationSm() {
 
                           {req.status === "accepted" && (
                             //aun no hace nada
-                            <button className="rounded-xl bg-red-300 p-2">Mensaje</button>
+                            <button className="rounded-xl bg-red-400 p-2">Mensaje</button>
                           )}
                         </div>
                       </div>
@@ -307,7 +307,7 @@ export default function NotificationSm() {
                       </h2>
                       <span className="text-[1rem] text-gray-600 truncate">Comenzó a seguirte</span>
                     </div>
-                    <button className="rounded-xl bg-red-300 p-2">Follow</button>
+                    <button className="rounded-xl bg-red-400 p-2">Follow</button>
                   </div>
                 </div>
 
@@ -363,7 +363,7 @@ export default function NotificationSm() {
                           </h2>
                           <span className="text-[1rem] text-gray-600 truncate">{user.userName}</span>
                         </div>
-                        <button className="rounded-xl bg-red-300 p-2">Follow</button>
+                        <button className="rounded-xl bg-red-400 p-2">Follow</button>
                       </div>
                     </div>
                   ))

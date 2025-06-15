@@ -1,28 +1,40 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import Header from "../Pages/Header";
 import Nav from "../Pages/Nav";
 import SidebarLeft from "../Pages/SidebarLeft";
 import SidebarRight from "../Pages/SidebarRight";
-
 import SidebarLeftNotification from "../Pages/SidebarLeftNotification";
 import SidebarLeftSearch from "../Pages/SidebarLeftSearch";
-import { useNavigate } from "react-router-dom";
 import NavSmFooter from "../Pages/NavSmFooter";
 import NavSm from "../Pages/NavSm";
 import Post from "../Pages/Post";
-import { useSelector } from "react-redux";
 import Event from "../Pages/Event";
+import { fetchEvent } from "../../store/eventSlice";
+import { fetchPost } from "../../store/postSlice";
 
 export default function Home() {
-
- const { user } = useSelector((state) => state.login);
-
-
-
-
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.login);
+  const dispatch = useDispatch();
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
+
+  const allEvents = useSelector((state) => state.event.allEvent);
+  const status = useSelector((state) => state.event.status);
+  const allPosts = useSelector((state) => state.post.allpost);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchEvent());
+      dispatch(fetchPost());
+    }
+  }, [dispatch, status]);
+
+  const allEvent = user ? allEvents.filter(event => event.creatorId !== user.id) : [];
+  const allPost = user ? allPosts.filter(post => post.userId !== user.id) : [];
 
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
@@ -98,14 +110,22 @@ export default function Home() {
         {/* MAIN SCROLLABLE CONTENT */}
         <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-gray-100 w-full hide-scrollbar">
           <div className="h-[200vh] bg-gray-100">
+            {allPost.map((post) => (
+              <div className="pb-4">
+                <Post
+                  key={post.id}
+                  id={post.id}
+                  description={post.description}
+                  userId={post.userId}
+                  eventId={post.eventId}
+                  image={post.image}
+                />
+              </div>
+            ))}
             <div className="pb-4">
-               <Post />
+              <Event allEvent={allEvent} />
             </div>
-           
-            <div className="pb-4">
-             <Event />   
-            </div>
-          
+
           </div>
         </main>
         <header className="bg-gray-100 text-white lg:shadow-md sticky top-0 z-20">

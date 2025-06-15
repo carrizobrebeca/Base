@@ -22,6 +22,8 @@ import PostPost from "./Components/Pages/PostPost";
 import { useDispatch } from "react-redux";
 import AuthWrapper from "./Components/Pages/AuthWrapper";
 import Follow from "./Components/Pages/Follow";
+import AddUserEvent from "./Components/Pages/AddUserEvent";
+import ShowUserEvent from "./Components/Pages/ShowUserEvent";
 
 function App() {
 
@@ -47,6 +49,8 @@ function App() {
           <Route path="/chat/:id" element={<Message />} />
           <Route path="/messagesm" element={<MessageSm />} />
           <Route path="/max" element={<PostMax />} />
+                 <Route path="/event/:eventId" element={<AddUserEvent />} />
+                    <Route path="/invitados/:eventId" element={<ShowUserEvent />} />
           {/* <Route path="/chat" element={<Chat />} /> */}
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/post" element={<PostPost />} />

@@ -20,15 +20,14 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("events");
+  const [headerSection, setHeaderSection] = useState("default"); 
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
   const user = useSelector((state) => state.login.user);
   const allEvents = useSelector((state) => state.event.allEvent);
   const status = useSelector((state) => state.event.status);
-
   const allPosts = useSelector((state) => state.post.allpost);
-
 
   useEffect(() => {
     if (status === "idle") {
@@ -69,8 +68,8 @@ export default function Profile() {
         <header className="bg-white text-white sticky top-0 z-20">
 
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
-            <NavSmProfile />
-            <HeaderProfile />
+            <NavSmProfile setHeaderSection={setHeaderSection}/>
+            <HeaderProfile headerSection={headerSection} myPosts={myPosts}/>
             <NavSmProfileSecond activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
 

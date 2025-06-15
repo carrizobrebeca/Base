@@ -43,7 +43,7 @@ export default function ProfileEvent() {
   }, [dispatch, status]);
 
   if (!event) {
-    return <p className="text-center mt-10 text-red-500">No se encontró el post.</p>;
+    return <p className="text-center mt-10 text-red-400">No se encontró el post.</p>;
   }
 
   const myPost = allPost.filter((post) => post.eventId === event.id);

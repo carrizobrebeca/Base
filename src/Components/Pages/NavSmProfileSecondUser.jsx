@@ -1,7 +1,6 @@
 
                
-const NavSmProfileSecond = ({ activeTab, setActiveTab }) => {
-
+const NavSmProfileSecondUser = ({ activeTab, setActiveTab }) => {
 
       const buttons = [
         {
@@ -58,7 +57,7 @@ const NavSmProfileSecond = ({ activeTab, setActiveTab }) => {
    
       <header className="bg-white p-2">
         <div className="text-sm font-semibold">
-          <div className="grid grid-cols-3 gap-6 justify-items-center border-t-2 border-gray-300">
+          <div className="grid grid-cols-3 gap-6 justify-items-center  border-t-2 border-gray-300">
             {buttons.map(({ id, label, icon }) => (
         <button
           key={id}
@@ -70,8 +69,7 @@ const NavSmProfileSecond = ({ activeTab, setActiveTab }) => {
           <span>{icon}</span>
           {label}
         </button>
-      ))}
-
+      ))}  
           </div>
         </div>
       </header>
@@ -80,4 +78,4 @@ const NavSmProfileSecond = ({ activeTab, setActiveTab }) => {
   
   );
 };
-export default NavSmProfileSecond;
+export default NavSmProfileSecondUser;

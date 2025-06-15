@@ -32,7 +32,12 @@ const loginSlice = createSlice({
       state.error = null;
       localStorage.removeItem('user');
       localStorage.removeItem('token');
-    },
+    },updatePrivacy: (state, action) => {
+  if (state.user) {
+    state.user.isPrivate = action.payload;
+    localStorage.setItem('user', JSON.stringify(state.user));
+  }
+}
   },
   extraReducers: (builder) => {
     builder
@@ -56,7 +61,7 @@ const loginSlice = createSlice({
   },
 });
 
-export const { logout } = loginSlice.actions;
+export const { logout, updatePrivacy  } = loginSlice.actions;
 export default loginSlice.reducer;
 
 

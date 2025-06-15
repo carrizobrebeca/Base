@@ -1,7 +1,7 @@
 import React from 'react'
 import post from "../../assets/post.PNG";
 import { useNavigate } from 'react-router-dom';
-const Event = () => {
+const Event = ({allEvent}) => {
     const navigate = useNavigate();
     return (
         <div className='w-[100%] flex justify-center p-30 bg-gray-200 rounded-xl'>

@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import post from "../../assets/post.PNG";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPost } from "../../store/postSlice";
 const HeaderEvent = ({ event }) => {
   const idCreator = event.creatorId;
   const eventId = event.id;
@@ -13,9 +14,9 @@ const HeaderEvent = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [followed, setFollowed] = useState([]);
-const [attendees, setAttendees] = useState([]);
-const [selectedValues, setSelectedValues] = useState([]);
-
+  const [attendees, setAttendees] = useState([]);
+  const [selectedValues, setSelectedValues] = useState([]);
+  const dispatch = useDispatch();
   const handleInvite = async () => {
     if (selectedValues.length === 0) return;
 
@@ -23,6 +24,8 @@ const [selectedValues, setSelectedValues] = useState([]);
       await axios.post(
         `http://localhost:3001/event/${eventId}/invite`,
         { userIds: selectedValues },
+
+
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Usuarios invitados correctamente");
@@ -51,7 +54,7 @@ const [selectedValues, setSelectedValues] = useState([]);
     fetchUsers();
   }, []);
 
-
+  console.log("usuarios cargados", selectedValues)
   const fetchRequests = async () => {
     try {
       const res = await axios.get("http://localhost:3001/requests", {
@@ -83,12 +86,12 @@ const [selectedValues, setSelectedValues] = useState([]);
   useEffect(() => {
     fetchRequests();
   }, [token]);
- useEffect(() => {
+  useEffect(() => {
     const fetchAttendees = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/event/${eventId}/attendees`);
-        
-            const attendees = res.data;
+
+        const attendees = res.data;
 
         setAttendees(attendees);
       } catch (err) {
@@ -101,6 +104,25 @@ const [selectedValues, setSelectedValues] = useState([]);
     fetchAttendees();
   }, [eventId]);
 
+  const allPost = useSelector((state) => state.post.allpost);
+  const status = useSelector((state) => state.post.status);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPost());
+    }
+  }, [dispatch, status]);
+
+
+  const myPost = allPost.filter((post) => post.eventId === eventId);
+  const handleOpenChat = async (eventId) => {
+
+    navigate(`/invitados/${eventId}`);
+  };
+  const handleOpen = async (eventId) => {
+
+    navigate(`/event/${eventId}`);
+  };
   return (
     <div>
       <header className="bg-gray-100 ">
@@ -119,8 +141,15 @@ const [selectedValues, setSelectedValues] = useState([]);
               </svg>
             </h2>
             <h2>{event.location}</h2>
+            
           </div>
-
+<div className="text-text flex justify-between items-center p-2">
+           
+             <h2>{event.eventDate}</h2> <h2>{event.eventTime}</h2>
+          </div>
+          <div className="text-text flex justify-start lg:justify-center items-center">
+     
+          </div>
         </div>
       </header>
       <header className="bg-gray-100 p-4">
@@ -146,54 +175,24 @@ const [selectedValues, setSelectedValues] = useState([]);
       </header>
       <header className="bg-gray-100 p-4">
         <div className="text-sm font-semibold">
-          <div className="grid grid-cols-2 gap-6 justify-items-center">
+          <div className="grid grid-cols-3 gap-6 justify-items-center">
 
             <div className="text-gray-600 flex items-center">
               <h2 className="whitespace-nowrap">
-                <h2 className="whitespace-nowrap">
-                 <div>
- <h2>Invitados al evento: {event.title}</h2>
-      {attendees.length === 0 ? (
-        <p>No hay usuarios invitados aún.</p>
-      ) : (
-        <ul>
-          {attendees.map((user) => (
-            <li key={user.id}>{user.name} ({user.userName})</li>
-          ))}
-        </ul>
-      )}
-</div>
-                </h2>
+                <span key={eventId} onClick={() => handleOpenChat(eventId)} className="font-bold">{attendees.length} </span>&nbsp;invitados
               </h2>
+            </div>
+             <div key={eventId} onClick={() => handleOpen(eventId)} className="text-gray-600 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+              </svg>
             </div>
             <div className="text-gray-600 flex items-center">
               <h2 className="whitespace-nowrap">
-                <span className="font-bold">256</span>&nbsp;publicaciones
+                <span className="font-bold">{myPost.length} </span>&nbsp;publicaciones
               </h2>
             </div>
-            <div className="text-gray-600 flex items-center">
-              {/* <h2 className="whitespace-nowrap"> */}
-                <label>
-                  Agregà participantes al evento:
-                  <select multiple value={selectedValues} onChange={(e) =>
-                    setSelectedValues(Array.from(e.target.selectedOptions, opt => opt.value))
-                  }>
-                    {followed.length === 0 ? (
-                      <option disabled>No seguís a nadie aún</option>
-                    ) : (
-                      followed.map((user) => (
-                        <option key={user.id} value={user.id}>
-                          {user.name}
-                        </option>
-                      ))
-                    )}
-                  </select>
-                </label>
-                <button onClick={handleInvite} className="bg-blue-500 text-white px-2 py-1 rounded ml-2">
-                  Invitar
-                </button>
-              {/* </h2> */}
-            </div>
+           
           </div>
         </div>
       </header>
