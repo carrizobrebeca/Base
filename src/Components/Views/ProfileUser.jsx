@@ -116,7 +116,7 @@ const fetchRequests = async () => {
 
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
             <NavSmProfileUser user={selectedUser} />
-            <HeaderProfileUser user={selectedUser} myPosts={myPosts} permitido={permitido}/>
+            <HeaderProfileUser user={selectedUser} myPosts={myPosts} />
             <NavSmProfileSecond user={selectedUser} activeTab={activeTab} setActiveTab={handleTabChange} />
           </div>
 

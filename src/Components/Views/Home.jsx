@@ -14,18 +14,20 @@ import Post from "../Pages/Post";
 import Event from "../Pages/Event";
 import { fetchEvent } from "../../store/eventSlice";
 import { fetchPost } from "../../store/postSlice";
+import axios from "axios";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.login);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.login);
+  const token = useSelector((state) => state.login.token);
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-
+  const [followed, setFollowed] = useState([]);
   const allEvents = useSelector((state) => state.event.allEvent);
   const status = useSelector((state) => state.event.status);
   const allPosts = useSelector((state) => state.post.allpost);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchEvent());
@@ -35,6 +37,7 @@ export default function Home() {
 
   const allEvent = user ? allEvents.filter(event => event.creatorId !== user.id) : [];
   const allPost = user ? allPosts.filter(post => post.userId !== user.id) : [];
+  console.log(allPost);
 
   const handlePanelOpen = (panel) => {
     setActivePanel(panel);
@@ -45,6 +48,41 @@ export default function Home() {
     setIsSidebarMinimized(false);
     setActivePanel(null);
   };
+
+  const fetchRequests = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/requests", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const follow = res.data.filter(
+        (r) => r.requesterId === user.id
+      );
+      const acceptedFollowed = follow.filter(
+        (r) => r.status === 'accepted'
+      );
+      //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
+      console.log("seguidos?:", acceptedFollowed);
+
+
+      const response = await axios.get("http://localhost:3001/users");
+      const users = response.data;
+
+      // Trae todos los usuarios que coinciden con los targetId de relaciones aceptadas
+      const seguidos = acceptedFollowed.map((relacion) =>
+        users.find((user) => user.id === relacion.targetId)
+      ) // Filtra por si alguno no se encuentra
+      setFollowed(seguidos);
+      console.log("que es estio:", seguidos);
+
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, [token]);
 
   return (
     <div className="flex min-h-screen overflow-hidden bg-gray-100 ">
@@ -110,18 +148,21 @@ export default function Home() {
         {/* MAIN SCROLLABLE CONTENT */}
         <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-gray-100 w-full hide-scrollbar">
           <div className="h-[200vh] bg-gray-100">
-            {allPost.map((post) => (
-              <div className="pb-4">
-                <Post
-                  key={post.id}
-                  id={post.id}
-                  description={post.description}
-                  userId={post.userId}
-                  eventId={post.eventId}
-                  image={post.image}
-                />
-              </div>
-            ))}
+            {allPost.filter((post) =>
+              followed.some((f) => f.id === post.userId)
+            )
+              .map((post) => (
+                <div className="pb-4">
+                  <Post
+                    key={post.id}
+                    id={post.id}
+                    description={post.description}
+                    userId={post.userId}
+                    eventId={post.eventId}
+                    image={post.image}
+                  />
+                </div>
+              ))}
             <div className="pb-4">
               <Event allEvent={allEvent} />
             </div>

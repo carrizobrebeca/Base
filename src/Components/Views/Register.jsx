@@ -9,22 +9,51 @@ import profileicon from "../../assets/galery_icon.png";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
-
-  const { status, error } = useSelector((state) => state.register);
-
+  const { status, error } = useSelector((state) => state.register)
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-
+const img = [
+  {
+    name: "image1",
+    image: "https://i.pinimg.com/736x/7e/bd/57/7ebd57e7b9969dabe2144c40c1c4fba4.jpg",
+  },
+   {
+    name: "image2",
+    image: "https://i.pinimg.com/736x/f1/10/15/f11015d1bd559e91bad0a1dfece1fb3d.jpg",
+  },
+   {
+    name: "image3",
+    image: "https://i.pinimg.com/736x/df/70/c2/df70c2fe33203bf85077a26f28b28b4b.jpg",
+  },
+   {
+    name: "image4",
+    image: "https://i.pinimg.com/736x/a9/59/4e/a9594e83613fd5afd8be3d8bb7d6f609.jpg",
+  },
+  {
+    name: "image5",
+    image: "https://i.pinimg.com/736x/aa/d5/ea/aad5eadd596b819f7891d1e9e8a88c7b.jpg",
+  },
+   {
+    name: "image6",
+    image: "https://i.pinimg.com/736x/43/f9/e7/43f9e7dd67d893a8d8f537f38b01d86c.jpg",
+  },
+    {
+    name: "image7",
+    image: "https://i.pinimg.com/736x/db/e1/a4/dbe1a49a67735a3a79a73ac77e9ac870.jpg",
+  },
+   {
+    name: "image8",
+    image: "https://i.pinimg.com/736x/69/9a/6d/699a6d5d4acbd2d9dd93a775f491eeb8.jpg",
+  },
+]
 
   const [state, setState] = useState({
     name: "",
     userName: "",
     city: "",
     password: "",
-    image: "https://i.pinimg.com/736x/f1/c6/ed/f1c6edfc945a658048ca2ca2fec96fbe.jpg",
+    image:img[Math.floor(Math.random() * img.length)].image,
 
   });
 
@@ -88,32 +117,49 @@ const Register = () => {
         return;
       }
     }
+    if (name === "image") {
+    if (state.image === "")
+      setErrors((prev) => ({ ...prev, image: "Imagen requerida" }));
+    else setErrors((prev) => ({ ...prev, image: "" }));
+  }
   };
 
   const handleChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
+   e.preventDefault();
+  const { name, value } = e.target;
 
-    setState((prev) => ({
-      ...prev,
-      [name]: name === "image" && value.trim() === ""
-        ? "https://i.pinimg.com/736x/f1/c6/ed/f1c6edfc945a658048ca2ca2fec96fbe.jpg"
-        : value,
-    }));
-    validate(
-      {
-        ...state,
-        [e.target.name]: e.target.value,
-      },
-      e.target.name
-    );
+  const random = img[Math.floor(Math.random() * img.length)].image;
+
+setState((prev) => ({
+  ...prev,
+  [name]:
+    name === "image" && value.trim() === ""
+      ? img[Math.floor(Math.random() * img.length)].image
+      : value,
+}));
+
+  validate(
+    {
+      ...state,
+      [name]: name === "image" && value.trim() === "" ? random : value,
+    },
+    name
+  );
   };
 
  const handleSubmit = (e) => {
   e.preventDefault();
   setFormSubmitted(true);
+ const noImage = !state.image || state.image.trim() === "";
 
-  dispatch(registerUser(state))
+  const finalState = {
+    ...state,
+    image: noImage
+      ? img[Math.floor(Math.random() * img.length)].image
+      : state.image,
+  };
+
+  dispatch(registerUser(finalState))
     .unwrap()
     .then(() => {
       navigate("/login");
@@ -210,14 +256,18 @@ const Register = () => {
                   className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
                   type="text"
                   placeholder="Ingrese url de su foto"
-                  required
+                  
 
                   name="image"
                   id="image"
                   onChange={handleChange}
                 />
               </div>
-              <img src={state.image ||"https://i.pinimg.com/736x/f1/c6/ed/f1c6edfc945a658048ca2ca2fec96fbe.jpg"} className='aspect-square rounded-full' alt="" />
+              <img src={
+    state.image?.trim() === ""
+      ? img[Math.floor(Math.random() * img.length)].image
+      : state.image
+  } className='object-cover aspect-square rounded-full' alt="" />
 
               <div className="pt-4 pb-4 flex justify-center">
                 <button type="submit" className="bg-red-400 rounded-xl text-white p-2">

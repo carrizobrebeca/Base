@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const HeaderProfileUser = ({ user, myPosts, permitido }) => {
+const HeaderProfileUser = ({ user, myPosts }) => {
   const navigate = useNavigate();
   const [requests, setRequests] = useState([]);
   const [followed, setFollowed] = useState([]);
   const [activeTab, setActiveTab] = useState("buttons");
   const [error, setError] = useState(null);
   const token = useSelector((state) => state.login.token);
-
+   const userlog = useSelector((state) => state.login.user);
   const sendFollowRequest = async (targetUserId) => {
     try {
       const token = localStorage.getItem("token"); // Token guardado tras login
@@ -40,16 +40,24 @@ const HeaderProfileUser = ({ user, myPosts, permitido }) => {
 
       const onlyRequestsToMe = res.data.filter((r) => r.targetId === user.id);
       const accepted = onlyRequestsToMe.filter((r) => r.status === "accepted");
-      console.log("Solicitudes para miiii:", onlyRequestsToMe);
+
       //requesterId del que me manda solicitud mis seguidores
       setRequests(accepted);
-
+   console.log("seguidorrrrrrr:", accepted);
+   const permiso = accepted.filter(
+        (r) => r.requesterId === userlog.id
+      );
    
+      console.log("perrrmiisooo:", permiso);
+      if (permiso.length === 0) {
+        setActiveTab("private");
+      }
+     
       
       const follow = res.data.filter((r) => r.requesterId === user.id);
       const acceptedFollowed = follow.filter((r) => r.status === "accepted");
       //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
-      console.log("seguidos:", acceptedFollowed);
+   
 
       const response = await axios.get("http://localhost:3001/users");
       const users = response.data;
@@ -60,12 +68,6 @@ const HeaderProfileUser = ({ user, myPosts, permitido }) => {
       ); // Filtra por si alguno no se encuentra
       setFollowed(seguidos);
 
-       const permi = accepted.map((user) => user.requesterId === user.id)
-    // Filtra por si alguno no se encuentra
-      if (permi.length === 0) {
-        setActiveTab("private");
-      }
-      console.log(permi);
       
       
     } catch (err) {
@@ -76,7 +78,7 @@ const HeaderProfileUser = ({ user, myPosts, permitido }) => {
 
   useEffect(() => {
     fetchRequests();
-  }, [token, permitido]);
+  }, [token, userlog]);
 
   return (
     <div>
@@ -133,6 +135,7 @@ const HeaderProfileUser = ({ user, myPosts, permitido }) => {
 
       <header className=" bg-white p-4">
         {activeTab === "private" && (
+          
           <div className="text-sm font-semibold ">
             <div className="grid grid-cols-3 gap-6 justify-items-center">
               <div className="text-gray-600 flex items-center ">
