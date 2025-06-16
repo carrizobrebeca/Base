@@ -50,7 +50,7 @@ const HeaderProfile = ({ myPosts, headerSection }) => {
         (r) => r.status === 'accepted'
       );
       //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
-      console.log("seguidos:", acceptedFollowed);
+
 
 
       const response = await axios.get("http://localhost:3001/users");

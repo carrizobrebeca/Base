@@ -8,27 +8,27 @@ const HeaderProfileUser = ({ user, myPosts }) => {
   const [requests, setRequests] = useState([]);
   const [followed, setFollowed] = useState([]);
   const [error, setError] = useState(null);
-    const token = useSelector((state) => state.login.token);
- const sendFollowRequest = async (targetUserId) => {
-  try {
-    const token = localStorage.getItem('token'); // Token guardado tras login
+  const token = useSelector((state) => state.login.token);
+  const sendFollowRequest = async (targetUserId) => {
+    try {
+      const token = localStorage.getItem('token'); // Token guardado tras login
 
-    const response = await axios.post(
-      `http://localhost:3001/request/${targetUserId}`,
-      {}, // body vacío porque no se necesita enviar datos extra
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Aquí va el token para autenticación
-        },
-      }
-    );
+      const response = await axios.post(
+        `http://localhost:3001/request/${targetUserId}`,
+        {}, // body vacío porque no se necesita enviar datos extra
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Aquí va el token para autenticación
+          },
+        }
+      );
 
-    alert(response.data.message); // Mensaje desde backend: "Solicitud enviada"
-  } catch (error) {
-    console.error(error);
-    alert(error.response?.data?.message || 'Error enviando solicitud');
-  }
-};
+      alert(response.data.message); // Mensaje desde backend: "Solicitud enviada"
+    } catch (error) {
+      console.error(error);
+      alert(error.response?.data?.message || 'Error enviando solicitud');
+    }
+  };
 
 
   const fetchRequests = async () => {
@@ -44,30 +44,30 @@ const HeaderProfileUser = ({ user, myPosts }) => {
       const onlyRequestsToMe = res.data.filter(
         (r) => r.targetId === user.id
       );
- const accepted = onlyRequestsToMe.filter(
-          (r) => r.status === 'accepted'
-        );
+      const accepted = onlyRequestsToMe.filter(
+        (r) => r.status === 'accepted'
+      );
       console.log("Solicitudes para miiii:", onlyRequestsToMe);
-//requesterId del que me manda solicitud mis seguidores
+      //requesterId del que me manda solicitud mis seguidores
       setRequests(accepted);
-const follow = res.data.filter(
+      const follow = res.data.filter(
         (r) => r.requesterId === user.id
       );
       const acceptedFollowed = follow.filter(
-          (r) => r.status === 'accepted'
-        );
-        //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
-          console.log("seguidos:", acceptedFollowed);
-           
-          
-    const response = await axios.get("http://localhost:3001/users");
-const users = response.data;
+        (r) => r.status === 'accepted'
+      );
+      //aca solo tengo el id del usuario a quien sigo tengo q mapear con users
+      console.log("seguidos:", acceptedFollowed);
 
-// Trae todos los usuarios que coinciden con los targetId de relaciones aceptadas
-const seguidos = acceptedFollowed.map((relacion) =>
-  users.find((user) => user.id === relacion.targetId)
-) // Filtra por si alguno no se encuentra
-setFollowed(seguidos)
+
+      const response = await axios.get("http://localhost:3001/users");
+      const users = response.data;
+
+      // Trae todos los usuarios que coinciden con los targetId de relaciones aceptadas
+      const seguidos = acceptedFollowed.map((relacion) =>
+        users.find((user) => user.id === relacion.targetId)
+      ) // Filtra por si alguno no se encuentra
+      setFollowed(seguidos)
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -89,7 +89,7 @@ setFollowed(seguidos)
               <img
                 src={user.image}
                 className="object-cover aspect-square rounded-full h-[100px]"
-               
+
               />
             </div>
             <div className="text-gray-600 flex items-center ">

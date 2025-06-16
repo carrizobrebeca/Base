@@ -15,15 +15,14 @@ import NotificationSm from "./Components/Pages/NotificationSm";
 import MessageSm from "./Components/Pages/MessageSm";
 import PostMax from "./Components/Pages/PostMax";
 import Register from "./Components/Views/Register";
-import Chat from "./Components/Views/Chat";
 import ProfileUpdate from "./Components/Views/ProfileUpdate";
 import PostEvent from "./Components/Pages/PostEvent";
 import PostPost from "./Components/Pages/PostPost";
-import { useDispatch } from "react-redux";
 import AuthWrapper from "./Components/Pages/AuthWrapper";
 import Follow from "./Components/Pages/Follow";
 import AddUserEvent from "./Components/Pages/AddUserEvent";
 import ShowUserEvent from "./Components/Pages/ShowUserEvent";
+
 
 function App() {
 
@@ -45,12 +44,13 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/postevent" element={<PostEvent />} />
           <Route path="/profileuser" element={<ProfileUser />} />
+   
           <Route path="/profileevent" element={<ProfileEvent />} />
           <Route path="/chat/:id" element={<Message />} />
           <Route path="/messagesm" element={<MessageSm />} />
           <Route path="/max" element={<PostMax />} />
-                 <Route path="/event/:eventId" element={<AddUserEvent />} />
-                    <Route path="/invitados/:eventId" element={<ShowUserEvent />} />
+          <Route path="/event/:eventId" element={<AddUserEvent />} />
+          <Route path="/invitados/:eventId" element={<ShowUserEvent />} />
           {/* <Route path="/chat" element={<Chat />} /> */}
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/post" element={<PostPost />} />
