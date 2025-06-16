@@ -73,7 +73,7 @@ export default function Profile() {
           <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-white w-full hide-scrollbar">
             <div className="min-h-screen bg-white">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {myEvents.map((event) => (
+                {myEvents.length > 0 ? (myEvents.map((event) => (
                   <div key={event.id} onClick={() => navigate("/profileevent", { state: { event } })} className="border rounded-lg overflow-hidden shadow-sm">
                     <img
                       src={event.image}
@@ -85,11 +85,25 @@ export default function Profile() {
                       <p className="text-sm text-gray-500">{event.location}</p>
                     </div>
                   </div>
-                ))}
+                ))
+                ) : (
+                  <div >
+                    <div className="flex justify-center items-center pt-10">
+                      <div className="border-2 border-gray-400 rounded-full p-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                        </svg>
+                      </div>
+                    </div>
+                    <h3 className="flex justify-center items-center text-text text-2xl pt-2">
+                      Sin eventos aun</h3>
+                  </div>
+                )}
               </div>
             </div>
           </main>
         )}
+
 
         {activeTab === "post" && (
           <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-4 bg-white hide-scrollbar">

@@ -55,9 +55,9 @@ export default function Search() {
         setError(null);
         const response = await axios.get(`http://localhost:3001/users`);
         const users = response.data;
-        // const filteredUser = users
-        // .filter((u) => u.name === searchValue)
-        const filteredUser = users.filter((u) =>
+        const myuser = users
+        .filter((u) => u.name !== user.name)
+        const filteredUser = myuser.filter((u) =>
           u.name.toLowerCase().includes(searchValue.toLowerCase())
         );
         setNameUsers(filteredUser);

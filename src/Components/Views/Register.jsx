@@ -24,7 +24,7 @@ const Register = () => {
     userName: "",
     city: "",
     password: "",
-    image: "",
+    image: "https://i.pinimg.com/736x/f1/c6/ed/f1c6edfc945a658048ca2ca2fec96fbe.jpg",
 
   });
 
@@ -92,10 +92,14 @@ const Register = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setState((prev) => ({
+      ...prev,
+      [name]: name === "image" && value.trim() === ""
+        ? "https://i.pinimg.com/736x/f1/c6/ed/f1c6edfc945a658048ca2ca2fec96fbe.jpg"
+        : value,
+    }));
     validate(
       {
         ...state,
@@ -201,7 +205,8 @@ const Register = () => {
                   <input onChange={(e) => setImage(e.target.files[0])} type="file" id="avatar" accept='.png, .jpg, .jpeg,' hidden />
                   <img className='aspect-square rounded-full' src={image ? URL.createObjectURL(image) : profileicon} alt="" />
 
-                </label> */} <input
+                </label> */} 
+                <input
                   className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
                   type="text"
                   placeholder="Ingrese url de su foto"
@@ -212,6 +217,7 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
+              <img src={state.image ||"https://i.pinimg.com/736x/f1/c6/ed/f1c6edfc945a658048ca2ca2fec96fbe.jpg"} className='aspect-square rounded-full' alt="" />
 
               <div className="pt-4 pb-4 flex justify-center">
                 <button type="submit" className="bg-red-400 rounded-xl text-white p-2">

@@ -28,34 +28,7 @@ export default function ProfileUser() {
   const [error, setError] = useState(null);
   const allPosts = useSelector((state) => state.post.allpost);
 
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchEvent());
-      dispatch(fetchPost());
-    }
-  }, [dispatch, status]);
-
-  const myEvents = selectedUser ? allEvents.filter(event => event.creatorId === selectedUser.id) : [];
-  const myPosts = selectedUser ? allPosts.filter(post => post.userId === selectedUser.id) : [];
-
-  const groupedPosts = [];
-  for (let i = 0; i < myPosts.length; i += 2) {
-    groupedPosts.push(myPosts.slice(i, i + 2));
-  }
-
-
-  const handlePanelOpen = (panel) => {
-    setActivePanel(panel);
-    setIsSidebarMinimized(true);
-  };
-
-  const handleResetSidebar = () => {
-    setIsSidebarMinimized(false);
-    setActivePanel(null);
-  };
-
-  const fetchRequests = async () => {
+const fetchRequests = async () => {
     try {
       const res = await axios.get("http://localhost:3001/requests", {
         headers: { Authorization: `Bearer ${token}` },
@@ -88,6 +61,34 @@ export default function ProfileUser() {
     }
   }, [token, selectedUser]);
 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchEvent());
+      dispatch(fetchPost());
+    }
+  }, [dispatch, status]);
+
+  const myEvents = selectedUser ? allEvents.filter(event => event.creatorId === selectedUser.id) : [];
+  const myPosts = selectedUser ? allPosts.filter(post => post.userId === selectedUser.id) : [];
+
+  const groupedPosts = [];
+  for (let i = 0; i < myPosts.length; i += 2) {
+    groupedPosts.push(myPosts.slice(i, i + 2));
+  }
+
+
+  const handlePanelOpen = (panel) => {
+    setActivePanel(panel);
+    setIsSidebarMinimized(true);
+  };
+
+  const handleResetSidebar = () => {
+    setIsSidebarMinimized(false);
+    setActivePanel(null);
+  };
+
+  
+
   const handleTabChange = (tab) => {
     if (permitido.length === 0) {
       setActiveTab("private");
@@ -115,7 +116,7 @@ export default function ProfileUser() {
 
           <div className="max-w-4xl mx-auto lg:hidden text-center text-xl font-semibold">
             <NavSmProfileUser user={selectedUser} />
-            <HeaderProfileUser user={selectedUser} myPosts={myPosts} />
+            <HeaderProfileUser user={selectedUser} myPosts={myPosts} permitido={permitido}/>
             <NavSmProfileSecond user={selectedUser} activeTab={activeTab} setActiveTab={handleTabChange} />
           </div>
 
