@@ -95,7 +95,6 @@ const HeaderProfileUser = ({ user, myPosts, permitido }) => {
                   onClick={() => sendFollowRequest(user.id)}
                   className="cursor-pointer bg-red-400  text-white p-2 rounded-xl"
                 >
-                  
                   Seguir
                 </button>
               </div>
@@ -122,11 +121,12 @@ const HeaderProfileUser = ({ user, myPosts, permitido }) => {
               </div>
               <div className="text-gray-600 flex items-center ">
                 <button className="cursor-pointer bg-gray-300 p-2 rounded-xl">
-                  {" "}
+                
                   Mensaje
                 </button>
               </div>
             </div>
+            <h2>{user.description}</h2>
           </div>
         )}
       </header>
