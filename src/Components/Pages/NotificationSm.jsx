@@ -235,7 +235,7 @@ const final = users.filter((u) => !followedIds.includes(u.id));
                     );
                   })
                 ) : (
-                  <p className="text-sm text-gray-500">No tenés solicitudes.</p>
+                  <p className="text-sm text-gray-500">No tenés notificaciones.</p>
                 )}
                 {followed.length > 0 ? (
                   followed.map((req) => {

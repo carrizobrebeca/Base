@@ -113,7 +113,7 @@ export default function Search() {
                 <input
                   type="search"
                   className="flex-grow rounded-full bg-gray-100 pl-4 py-2 mr-2 ml-2"
-                  placeholder="Buscar..."
+                  placeholder="Buscar usuario..."
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
 

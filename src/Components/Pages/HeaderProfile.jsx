@@ -133,7 +133,7 @@ const HeaderProfile = ({ myPosts, headerSection }) => {
                 </svg>
               </div>
               <div className="text-gray-600 flex items-center ">
-                <h2 > {user?.isPrivate ? 'Cuenta pública' : 'Cuenta privada'}</h2>
+                <h2 > {user?.isPrivate ? 'Cuenta privada' : 'Cuenta pública' }</h2>
               </div>
               <div className="text-gray-600 flex items-center ">
                 <div>
@@ -148,7 +148,7 @@ const HeaderProfile = ({ myPosts, headerSection }) => {
                     <span
                       className={`mx-5 border rounded-full w-20 h-9 flex items-center flex-shrink-0 
       after:w-8 after:h-8 after:rounded-full after:bg-white after:transition
-      ${user?.isPrivate ? 'bg-slate-400 after:translate-x-[2.73rem]' : 'bg-red-400'}`}
+      ${user?.isPrivate ? 'bg-red-400 after:translate-x-[2.73rem]' : 'bg-slate-400'}`}
                     ></span>
                   </label>
                 </div>
