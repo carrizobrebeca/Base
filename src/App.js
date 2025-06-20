@@ -23,9 +23,8 @@ import Follow from "./Components/Pages/Follow";
 import AddUserEvent from "./Components/Pages/AddUserEvent";
 import ShowUserEvent from "./Components/Pages/ShowUserEvent";
 import Camera from "./Components/Pages/Camera";
-import Cam from "./Components/Pages/Cam";
-import Camcopy from "./Components/Pages/Camcopy";
-import Cameracam from "./Components/Pages/Cameracam";
+import CameraPost from "./Components/Pages/CameraPost";
+
 
 
 function App() {
@@ -49,8 +48,7 @@ function App() {
           <Route path="/postevent" element={<PostEvent />} />
           <Route path="/profileuser" element={<ProfileUser />} />
         <Route path="/camera" element={<Camera />} />
-        <Route path="/cam" element={<Cam />} />
-<Route path="/camcam" element={<Cameracam />} />
+  <Route path="/cam" element={<CameraPost />} />
           <Route path="/profileevent" element={<ProfileEvent />} />
           <Route path="/chat/:id" element={<Message />} />
           <Route path="/messagesm" element={<MessageSm />} />

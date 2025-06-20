@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Camera.css"
+
 import SidebarLeft from "./SidebarLeft";
 import NavSmFooter from "./NavSmFooter";
 
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ export default function Camera() {
     const photo = useRef();
     const [photos, setPhotos] = useState(false);
     const [videos, setVideos] = useState(false);
+    const [image, setImage] = useState("");
   
     const cameraView = () => {
       try {
@@ -40,10 +41,16 @@ export default function Camera() {
         let context = ph.getContext("2d");
         context.drawImage(vid, 0, 0,ph.width, ph.height);
         setPhotos(true);   
+       const dataUrl = ph.toDataURL("image/png");
+console.log(dataUrl);
+setImage(dataUrl)
+
       } catch (error) {
         console.log(error);
       }
     };
+  
+    console.log("imagen",image);
     
 
     const closePhoto = () => {
@@ -141,8 +148,9 @@ export default function Camera() {
         autoPlay
         playsInline
       ></video>
-
+      
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-10">
+
         <button
           onClick={takePhoto}
           className="w-[80px] h-[80px] rounded-full bg-gray-100 border-double border-white"
@@ -153,29 +161,35 @@ export default function Camera() {
     {/* FOTO CAPA - adelante */}
     <div className={`absolute inset-0 z-10 ${photos ? "flex" : "hidden"} items-center justify-center`}>
       <canvas
-        ref={photo}
+        ref={photo}full
         className="bg-white object-cover h-full w-full rounded-xl"
       ></canvas>
 
       {/* Botón cerrar (arriba a la derecha) */}
       <button
         onClick={closePhoto}
-      className="absolute top-4 text-white  left-2 w-[40px] h-[40px] rounded-full bg-black/50 text-sm font-bold z-20 items-center "
+      className="absolute top-4 text-white left-2 w-[40px] h-[40px] rounded-full bg-black/50 text-sm font-bold z-20 items-center "
       >
-     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 items-center">
   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 </svg>
 
       </button>
 
       {/* Botón continuar (abajo centrado) */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-2 items-center">
-        <button className="w-[80px] h-[80px] rounded-full bg-gray-100 border-4 border-red-400">
-       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+      <div className="absolute bottom-2 right-2 transform -translate-x-1/2 z-2 items-center">
+      
+        
+        <div className="flex justify-between">
+          <input type="text" placeholder="Agrega descripción..." className="w-full p-2 rounded-full text-gray-400" /> 
+<button className="w-[40px] h-[40px] rounded-full bg-white/50">
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 items-center">
   <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 </svg>
 
         </button>
+      </div>
+       
       </div>
     </div>
   </div>
