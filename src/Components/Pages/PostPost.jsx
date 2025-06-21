@@ -5,15 +5,15 @@ import axios from "axios";
 import SidebarLeft from "./SidebarLeft";
 import NavSmProfile from "./NavSmProfile";
 import { fetchNewPost } from "../../store/postSlice";
-const PostPost= () => {
+const PostPost = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.login.user);
   const postStatus = useSelector((state) => state.post.status);
   const postError = useSelector((state) => state.post.error);
- const location = useLocation();
-const event = location.state?.event;
+  const location = useLocation();
+  const event = location.state?.event;
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [activePanel, setActivePanel] = useState(null);
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
@@ -28,18 +28,14 @@ const event = location.state?.event;
     setActivePanel(null);
   };
 
-
   const [state, setState] = useState({
-    image: "", 
-    description: ""
-
+    image: "",
+    description: "",
   });
   const [error, setError] = useState({
     image: "*",
     description: "*",
   });
-
-
 
   useEffect(() => {
     if (postStatus === "succeeded" && formSubmitted) {
@@ -70,7 +66,6 @@ const event = location.state?.event;
     );
   };
 
-
   const disable = () => {
     if (formSubmitted) return true;
     return Object.values(error).some((error) => error !== "");
@@ -81,11 +76,13 @@ const event = location.state?.event;
     setFormSubmitted(false);
 
     if (!disable()) {
-      dispatch(fetchNewPost({
-        ...state,
-       userId: user?.id,
-       eventId: event?.id
-      }))
+      dispatch(
+        fetchNewPost({
+          ...state,
+          userId: user?.id,
+          eventId: event?.id,
+        })
+      )
         .unwrap()
         .then((response) => {
           navigate("/home");
@@ -96,8 +93,6 @@ const event = location.state?.event;
     }
   };
 
-
-
   const validate = (state, name) => {
     if (name === "image") {
       if (state.image === "") {
@@ -106,20 +101,21 @@ const event = location.state?.event;
         setError((prev) => ({ ...prev, image: "" }));
       }
     }
-if (name === "description") {
-  if (state.description === "") {
-    setError((prev) => ({ ...prev, description: "Descripción no puede estar vacía" }));
-  } else {
-    setError((prev) => ({ ...prev, description: "" }));
-  }
-}
-    
+    if (name === "description") {
+      if (state.description === "") {
+        setError((prev) => ({
+          ...prev,
+          description: "Descripción no puede estar vacía",
+        }));
+      } else {
+        setError((prev) => ({ ...prev, description: "" }));
+      }
+    }
   };
 
   return (
     <div>
       <div className="flex min-h-screen overflow-hidden bg-white relative">
-
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col p-4 border-r z-10">
           <SidebarLeft
             minimized={isSidebarMinimized}
@@ -146,7 +142,7 @@ if (name === "description") {
                   className="w-full h-full pb-4 flex items-center bg-white font-momo rounded-xl"
                   onSubmit={handleSubmit}
                 >
-                  <div className="p-14">  
+                  <div className="p-14">
                     <h2>Publicar en Evento</h2>
                     <div className="pb-4">
                       <input
@@ -154,7 +150,6 @@ if (name === "description") {
                         type="text"
                         placeholder="Estado/Descripciòn"
                         required
-
                         name="description"
                         id="description"
                         onChange={handleChange}
@@ -165,34 +160,33 @@ if (name === "description") {
                         className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
                         type="text"
                         placeholder="URL de la imagen"
-
                         name="image"
                         id="image"
                         onChange={handleChange}
                       />
-                    </div> 
+                    </div>
                     {/* state.image || */}
-                    <img className='w-full aspect-square rounded-lg' src={ "https://i.pinimg.com/474x/75/01/5a/75015a19db67c5ca6f18ef7e000d0a61.jpg"}
+                    <img
+                      className="w-full aspect-square rounded-lg"
+                      src={
+                        "https://i.pinimg.com/474x/75/01/5a/75015a19db67c5ca6f18ef7e000d0a61.jpg"
+                      }
                       alt="Vista previa"
                     />
                     <div className="pt-2 pb-4 flex justify-center">
                       <button
                         type="submit"
                         className="bg-red-400 rounded-xl text-white p-2 disabled:opacity-50"
-                        disabled={disable()}
+                        disabled={disable()} 
                       >
                         Publicar
                       </button>
                     </div>
-
-
                   </div>
                 </form>
-
               </>
             </div>
           </main>
-        
         </div>
       </div>
     </div>
@@ -200,6 +194,3 @@ if (name === "description") {
 };
 
 export default PostPost;
-
-
-

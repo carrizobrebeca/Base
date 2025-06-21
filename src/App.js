@@ -25,10 +25,7 @@ import ShowUserEvent from "./Components/Pages/ShowUserEvent";
 import Camera from "./Components/Pages/Camera";
 import CameraPost from "./Components/Pages/CameraPost";
 
-
-
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -47,8 +44,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/postevent" element={<PostEvent />} />
           <Route path="/profileuser" element={<ProfileUser />} />
-        <Route path="/camera" element={<Camera />} />
-  <Route path="/cam" element={<CameraPost />} />
+          <Route path="/camera" element={<Camera />} />
+          <Route path="/cam" element={<CameraPost />} />
           <Route path="/profileevent" element={<ProfileEvent />} />
           <Route path="/chat/:id" element={<Message />} />
           <Route path="/messagesm" element={<MessageSm />} />
@@ -61,12 +58,6 @@ function App() {
         </Route>
       </Routes>
     </Router>
-
-
-
-
-
-
   );
 }
 
